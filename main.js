@@ -19,7 +19,8 @@ app.listen(port,()=>{
     console.log(`Application is now running on port ${port}`);
 });
 /*
-app.get
+app.get /cafe
+Table: cafes
  */
 
 app.get('/', (req,res)=> {
@@ -47,7 +48,10 @@ app.get('/cafe/:cafe_id', (req,res)=> {
         res.send(result);
     });
 });
-
+/*
+app.get /rating
+Table: cafes
+ */
 app.get('/rating', (req,res)=> {
     const { rating } = req.query;
 
@@ -60,6 +64,28 @@ app.get('/rating', (req,res)=> {
     }
 
     connection.query(q,(error,result)=>{
+        res.send(result);
+    });
+});
+
+/*
+app.get /user
+Table: users
+ */
+app.get('/user', (req,res)=> {
+    const q = `select * 
+                      from users`;
+    connection.query(q,(error,result)=>{
+        res.send(result);
+    });
+});
+
+app.get('/user/:user_id', (req,res)=> {
+    const userIdRequest = req.params.user_id;
+    const q = `select * 
+                      from users
+                      where users_id = ?`;
+    connection.query(q,[userIdRequest],(error,result)=>{
         res.send(result);
     });
 });
