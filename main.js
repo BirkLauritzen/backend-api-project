@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.use(express.json());
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -92,5 +92,53 @@ app.get('/user/:user_id', (req,res)=> {
 
 /*
 app.post
+Table: user
+Insert new user into the user table
  */
+app.post(`/new-user`,(req,res)=>{
+    const userId = req.body.users_id;
+    const firstName = req.body.first_name;
+    const lastName = req.body.last_name;
+
+    const q = `insert into users
+                      (users_id,first_name,last_name) values (?,?,?)`;
+
+    connection.query(q,[userId,firstName,lastName], (error,result) => {
+        console.log('User inserted successfully');
+        res.send("Successful post request");
+    });
+
+});
+
+/*
+app.post
+Table: cafes
+Insert new cafe into the cafes table
+ */
+app.post(`/new-cafe`,(req,res)=>{
+    const cafeId = req.body.users_id;
+    const cafeName = req.body.first_name;
+    const lastName = req.body.last_name;
+
+    const q = `insert into users
+                      (users_id,first_name,last_name) values (?,?,?)`;
+
+    connection.query(q,[userId,firstName,lastName], (error,result) => {
+        console.log('User inserted successfully');
+        res.send("Successful post request");
+    });
+
+});
+/*
+app.post
+Table: favorites
+ */
+app.post(`/`,(req,res)=>{
+    const favoriteId = req.body.favorite_id;
+    const cafe_name = req.body.favorite_cafe_name;
+    const firstName = req.body.first_name;
+    const lastName = req.body.last_name;
+
+
+});
 
