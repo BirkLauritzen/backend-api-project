@@ -145,12 +145,59 @@ app.post(`/new-cafe`,(req,res)=>{
 app.post
 Table: favorites
  */
-app.post(`/`,(req,res)=>{
-    const favoriteId = req.body.favorite_id;
-    const cafe_name = req.body.favorite_cafe_name;
+app.post(`/new-favorite`,(req,res)=>{
+    const cafeName = req.body.favorite_cafe_name;
     const firstName = req.body.first_name;
     const lastName = req.body.last_name;
 
+    const insertFavoriteQ = `insert into favorites
+                                    (cafe_id,favorite_cafe_name,users_id,first_name,last_name) 
+                                    values(
+                                    (select cafe_id from cafes where cafe_name = ?), 
+                                    ?,
+                                    (select users_id from users where first_name = ? and last_name = ?),
+                                    ?,
+                                    ? 
+                                    )`;
 
+
+    connection.query(insertFavoriteQ, [cafeName,cafeName,firstName,lastName,firstName,lastName], (error,result) => {
+        if (error) {
+            console.error("Error inserting into favorites:", error);
+            res.status(500).send("Internal server error");
+            return;
+        }
+
+        const checkUserQ = `select users_id
+                                    from users 
+                                    where first_name = ? and last_name = ?
+        `;
+
+        connection.query(checkUserQ,[firstName,lastName], (error,userResult) => {
+           if (error) {
+               console.error(error);
+               res.status(500).send("Internal server error");
+           }
+
+           if (userResult.length === 0) {
+               const createUserQ = `Insert into users 
+                                            (first_name,last_name) 
+                                            values (?,?)
+               `;
+                connection.query(createUserQ,[firstName,lastName], (error,createUserResult) => {
+                    if (error) {
+                        console.error(error);
+                        res.status(500).send("Internal server error");
+                        return;
+                    }
+
+                    console.log("New user created:",createUserResult.insertId);
+                    res.send("New favorite cafe added and new user created");
+               });
+           } else {
+               res.send("New favorite cafe added");
+           }
+        });
+    });
 });
 
