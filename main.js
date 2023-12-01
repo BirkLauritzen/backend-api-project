@@ -22,16 +22,6 @@ app.listen(port,()=>{
 app.get /cafe
 Table: cafes
  */
-
-app.get('/', (req,res)=> {
-    connection.query(`select * 
-                    from cafes 
-                    inner join favorites 
-                    on favorites.cafe_id = cafes.cafe_id`,(error,result)=>{
-       res.send(result);
-    });
-});
-
 app.get('/cafe', (req,res)=> {
     const q = `select * from cafes`;
     connection.query(q,(error,result)=>{
@@ -51,6 +41,7 @@ app.get('/cafe/:cafe_id', (req,res)=> {
 /*
 app.get /rating
 Table: cafes
+url syntax: localhost:3000/rating?rating=2.5
  */
 app.get('/rating', (req,res)=> {
     const { rating } = req.query;
@@ -64,8 +55,39 @@ app.get('/rating', (req,res)=> {
     }
 
     connection.query(q,(error,result)=>{
-        res.send(result);
+        if (error) {
+            console.error(error);
+            res.status(500).send("Internal server error");
+        } else {
+            res.send(result);
+        }
     });
+});
+
+/*
+app.get popular cafes
+table: cafes
+ */
+app.get('/cafe/popular-cafes', (req,res) => {
+    console.log("Request received for /cafe/popular-cafes");
+    const popularCafesQ =
+        `select cafe_name,rating
+         from cafes
+         where rating is not null and rating > 0
+         order by rating
+         limit 5
+         `;
+    console.log("Connection State", connection.state);
+    connection.query(popularCafesQ,(error,result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send("Internal server error");
+        } else {
+            console.log("Query successful. Result:",result);
+            res.send(result);
+        }
+    });
+
 });
 
 /*
