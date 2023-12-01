@@ -94,18 +94,23 @@ app.get('/user/:user_id', (req,res)=> {
 app.post
 Table: user
 Insert new user into the user table
+It automatically creates a new user_id to the user been added.
  */
 app.post(`/new-user`,(req,res)=>{
-    const userId = req.body.users_id;
     const firstName = req.body.first_name;
     const lastName = req.body.last_name;
 
     const q = `insert into users
-                      (users_id,first_name,last_name) values (?,?,?)`;
+                      (first_name,last_name) values (?,?)`;
 
-    connection.query(q,[userId,firstName,lastName], (error,result) => {
-        console.log('User inserted successfully');
-        res.send("Successful post request");
+    connection.query(q,[firstName,lastName], (error,result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send("Internal server error");
+        } else {
+            console.log('User inserted successfully');
+            res.send("Successful post request");
+        }
     });
 
 });
