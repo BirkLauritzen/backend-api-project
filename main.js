@@ -113,19 +113,26 @@ app.post(`/new-user`,(req,res)=>{
 /*
 app.post
 Table: cafes
-Insert new cafe into the cafes table
+Insert new cafe into the cafes table, and
+it automatically creates a new cafe_id to the cafe there's been added to the table.
  */
 app.post(`/new-cafe`,(req,res)=>{
-    const cafeId = req.body.users_id;
-    const cafeName = req.body.first_name;
-    const lastName = req.body.last_name;
+    const cafeName = req.body.cafe_name;
+    const description = req.body.descriptions;
+    const address = req.body.address;
+    const rating = req.body.rating;
 
-    const q = `insert into users
-                      (users_id,first_name,last_name) values (?,?,?)`;
+    const q = `insert into cafes
+                      (cafe_name, descriptions,address,rating) values (?,?,?,?)`;
 
-    connection.query(q,[userId,firstName,lastName], (error,result) => {
-        console.log('User inserted successfully');
-        res.send("Successful post request");
+    connection.query(q,[cafeName,description,address,rating], (error,result) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send("Internal server error");
+        } else {
+            console.log('Cafe inserted successfully');
+            res.send("Successful post request");
+        }
     });
 
 });
