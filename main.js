@@ -13,7 +13,7 @@ const connection = mysql.createConnection({
     password: "/*Insert Password*/",
     database: "cafes_database"
 });
-/*Insert Password*/
+
 
 app.listen(port,()=>{
     console.log(`Application is now running on port ${port}`);
@@ -64,31 +64,6 @@ app.get('/rating', (req,res)=> {
     });
 });
 
-/*
-app.get popular cafes
-table: cafes
- */
-app.get('/cafe/popular-cafes', (req,res) => {
-    console.log("Request received for /cafe/popular-cafes");
-    const popularCafesQ =
-        `select cafe_name,rating
-         from cafes
-         where rating is not null and rating > 0
-         order by rating
-         limit 5
-         `;
-    console.log("Connection State", connection.state);
-    connection.query(popularCafesQ,(error,result) => {
-        if (error) {
-            console.error(error);
-            res.status(500).send("Internal server error");
-        } else {
-            console.log("Query successful. Result:",result);
-            res.send(result);
-        }
-    });
-
-});
 
 /*
 app.get /user
