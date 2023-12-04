@@ -19,3 +19,11 @@ function fetchCafesAndDisplay () {
             console.error("Error fetching cafes", error);
         });
 }
+
+function fetchDataAndDisplayMap () {
+    const map = L.map('map').setView([55.6761,12.5683],13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+}

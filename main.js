@@ -7,9 +7,7 @@ const port = 3000;
 
 app.use(express.json());
 
-app.use(cors({
-    origin: `https://birklauritzen.github.io/backend-api-project/`,
-}));
+app.use(cors());
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -17,7 +15,7 @@ const connection = mysql.createConnection({
     password: "/*Insert Password*/",
     database: "cafes_database"
 });
-/*Insert Password*/
+
 
 app.listen(port,()=>{
     console.log(`Application is now running on port ${port}`);

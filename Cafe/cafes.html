@@ -5,11 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cafes Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" integrity="sha512-xw5Z5Lr+E5RP/D6lYVXYiV5A7+EK4Ku4LPd6z0gXNBxtvBc3/KR2E2KDlbwXabBBO6xP1RUqdsI9FSvQ+byaAQ==" crossorigin=""/>
 </head>
 <body>
 <main>
-    <h1>Cafes in Copenhagen</h1>
-    <div id="cafe"></div>
+    <section class="list-of-cafes">
+        <h1>Cafes in Copenhagen</h1>
+        <div id="cafe"></div>
+    </section>
+
+    <section>
+        <div id="map" style="height: 400px"></div>
+    </section>
+
 </main>
 <script src="cafe.js"></script>
 <script src="../common.js"></script>
