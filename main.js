@@ -7,7 +7,9 @@ const port = 3000;
 
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({
+    origin: `https://birklauritzen.github.io/backend-api-project/`,
+}));
 
 const connection = mysql.createConnection({
     host: "localhost",
