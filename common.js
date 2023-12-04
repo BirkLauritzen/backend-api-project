@@ -23,14 +23,14 @@ function fetchCafesAndDisplay () {
 function fetchDataAndDisplayMap () {
     const map = L.map('map').setView([55.6761,12.5683],13);
 
-    L.tilelayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
     fetch("http://localhost:3000/cafe")
         .then(response=> response.json())
-        .then(location => {
-            location.forEach(location => {
+        .then(cafes => {
+            cafes.forEach(cafe => {
                const marker = L.marker([cafe.latitude, cafe.longitude])
                    .addTo(map)
                    .bindPopup(`<b>${cafe.cafe_name}</b><br>${cafe.address}`)
