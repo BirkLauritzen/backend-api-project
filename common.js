@@ -7,12 +7,14 @@ function fetchCafesAndDisplay () {
         })
         .then(cafes => {
             console.log("Cafes",cafes);
+            const ulCafes = document.createElement("ul");
             const cafeContainer = document.querySelector('#cafe');
+            cafeContainer.appendChild(ulCafes);
             cafeContainer.innerHTML = '';
             cafes.forEach(cafe => {
-                const cafeDiv = document.createElement('div');
-                cafeDiv.innerText = cafe.cafe_name;
-                cafeContainer.appendChild(cafeDiv);
+                const cafeLi = document.createElement('li');
+                cafeLi.innerText = cafe.cafe_name;
+                cafeContainer.appendChild(cafeLi);
             });
         })
         .catch(error => {
