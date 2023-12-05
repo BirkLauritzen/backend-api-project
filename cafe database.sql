@@ -10,7 +10,8 @@ cafe_name varchar(100),
 descriptions text
 );
 alter table cafes
-add column rating float;
+add column longitude decimal(9,6),
+add column latitude decimal(9,6);
 
 
 CREATE TABLE favorites (
@@ -64,9 +65,10 @@ INSERT INTO favorites (favorite_id,cafe_id,favorite_cafe_name,first_name,last_na
 
 	
 /* Update statements */
-update favorites
-set users_id = 1
-where favorite_id = 10;
+update cafes
+set longitude = 12.579290 and latitude = 55.678670
+where cafe_id = 1;
+
 
 
     
