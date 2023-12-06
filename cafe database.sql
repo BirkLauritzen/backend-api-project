@@ -1,5 +1,7 @@
+/* Creates schema cafes_database if it doesn't exist */
 CREATE SCHEMA cafes_database;
 
+/* Uses the schema cafes_database so the tables are created in the right database */
 USE cafes_database;
 
 /* Drop tables if they exist to avoid errors */
