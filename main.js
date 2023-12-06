@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
+require('dotenv').config();
 
 const app = express();
 const port = 3000;
@@ -13,7 +14,18 @@ const connection = mysql.createConnection({
     host: process.env.HOST,
     user: process.env.USER,
     password: process.env.PASSWORD,
-    database: "cafes_database"
+    database: "cafes_database",
+    multipleStatements: true,
+});
+
+
+connection.connect((error) => {
+    if (!error) {
+        console.log("connected");
+    } else {
+        console.log(error);
+        console.log("Connection failed",error.message)
+    }
 });
 
 
