@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 
 #cafe {
-    display: flex;
     font-size: 20px;
     margin-bottom: 50px;
+    margin-left: 60px;
     font-family: 'Roboto Condensed', sans-serif;
 }
 #ul-cafe {
-    justify-content: center;
     -webkit-column-count: 4;
     -webkit-column-gap: 10px;
     list-style-position: inside;
