@@ -1,68 +1,40 @@
-use cafes_database;
-select * from cafes;
-select * from users;
-select * from favorites;
+CREATE SCHEMA cafes_database;
 
-/* creating tables */
-create table cafes (
-cafe_id INT primary key,
-cafe_name varchar(100),
-descriptions text
+USE cafes_database;
+
+/* Drop tables if they exist to avoid errors */
+DROP TABLE IF EXISTS favorites;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS cafes;
+
+/* Create tables */
+CREATE TABLE cafes (
+cafe_id INT PRIMARY KEY,
+cafe_name VARCHAR(100),
+descriptions TEXT,
+address VARCHAR(100),
+rating DECIMAL(2,1),
+longitude DECIMAL(9,6),
+latitude DECIMAL(9,6)
 );
-alter table cafes
-add column longitude decimal(9,6),
-add column latitude decimal(9,6);
 
+CREATE TABLE users (
+users_id INT PRIMARY KEY,
+first_name VARCHAR(100),
+last_name VARCHAR(100)
+);
 
 CREATE TABLE favorites (
-    favorite_id INT AUTO_INCREMENT PRIMARY KEY,
-    cafe_id INT,
-    favorite_cafe_name VARCHAR(255),
-    users_id INT,
-    first_name VARCHAR(100),
-    last_name VARCHAR(100),
-    FOREIGN KEY (cafe_id) REFERENCES cafes(cafe_id),
-    FOREIGN KEY (users_id) REFERENCES users(users_id)
+favorite_id INT AUTO_INCREMENT PRIMARY KEY,
+cafe_id INT,
+favorite_cafe_name VARCHAR(255),
+users_id INT,
+FOREIGN KEY (cafe_id) REFERENCES cafes(cafe_id),
+FOREIGN KEY (users_id) REFERENCES users(users_id)
 );
-alter table favorites
-add constraint fk_favorites_users_id
-foreign key (users_id) references users(users_id);
 
-
-create table users (
-users_id int primary key,
-first_name varchar(100),
-last_name varchar(100)
-); 
-
-
-
-/* Insert data into the tables */
-INSERT INTO favorites (favorite_id,cafe_id,favorite_cafe_name,first_name,last_name) values
-(1, 6, 'Paludan Bog & Café', 'Sophia','Brown'),
-(2, 2, 'Café Victor','Alice','Smith'),
-(3, 3, 'Democratic Coffee','Bob','Johnson'),
-(4, 7, 'Cafe Bjerget','Daniel','Taylor'),
-(5, 11, 'The Living Room','Emma','Davis'),
-(6, 14, 'Café Norden','David','Anderson'),
-(7, 8, 'Café Retro','Olivia','Miller'),
-(8, 10, 'Café Dyrehaven','Michael','Jones'),
-(9, 4, 'Absalon','Emily','Williams'),
-(10, 12, 'Café Sommersko','John','Doe');
-    
-    INSERT INTO users (users_id, first_name, last_name) VALUES
-    (1, 'John', 'Doe'),
-    (2, 'Alice', 'Smith'),
-    (3, 'Bob', 'Johnson'),
-    (4, 'Emily', 'Williams'),
-    (5, 'Michael', 'Jones'),
-    (6, 'Sophia', 'Brown'),
-    (7, 'Daniel', 'Taylor'),
-    (8, 'Olivia', 'Miller'),
-    (9, 'David', 'Anderson'),
-    (10, 'Emma', 'Davis');
-    
-INSERT INTO cafes (cafe_id, cafe_name, description, address, rating, longitude, latitude)
+/* Insert data into cafes */
+INSERT INTO cafes (cafe_id, cafe_name, descriptions, address, rating, longitude, latitude)
 VALUES
 ('1', 'Café Europa 1989', 'this café is inspired by European café culture and has a cozy atmosphere.', 'Amagertorv 1, 1160 Copenhagen', '3.5', '12.579290', '55.678670'),
 ('2', 'Café Victor', 'this café is known for its cozy atmosphere and is a popular meeting place.', 'Ny Østergade 8, 1101 Copenhagen', '4', '12.583250', '55.680750'),
@@ -81,20 +53,28 @@ VALUES
 ('15', 'Studenterhuset', NULL, 'Købmagergade 52, 1150 Copenhagen', '4', '12.576420', '55.681489'),
 ('16', 'Riccos', NULL, 'Istedgade 119, 1650 Copenhagen', '3', '12.548264', '55.667615');
 
+/* Insert data into users */
+INSERT INTO users (users_id, first_name, last_name) VALUES
+(1, 'John', 'Doe'),
+(2, 'Alice', 'Smith'),
+(3, 'Bob', 'Johnson'),
+(4, 'Emily', 'Williams'),
+(5, 'Michael', 'Jones'),
+(6, 'Sophia', 'Brown'),
+(7, 'Daniel', 'Taylor'),
+(8, 'Olivia', 'Miller'),
+(9, 'David', 'Anderson'),
+(10, 'Emma', 'Davis');
 
-	
-/* Update statements */
-update cafes
-set longitude = 12.579290 and latitude = 55.678670
-where cafe_id = 1;
-
-
-
-    
-    
-
-    
-    
-
-
-
+/* Insert data into favorites */
+INSERT INTO favorites (cafe_id, favorite_cafe_name, users_id) VALUES
+(6, 'Paludan Bog & Café', 6),
+(2, 'Café Victor', 2),
+(3, 'Democratic Coffee', 3),
+(7, 'Cafe Bjerget', 7),
+(11, 'The Living Room', 10),
+(14, 'Café Norden', 9),
+(8, 'Café Retro', 8),
+(10, 'Café Dyrehaven', 5),
+(4, 'Absalon', 4),
+(12, 'Café Sommersko', 1);
