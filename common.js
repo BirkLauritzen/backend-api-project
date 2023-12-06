@@ -45,3 +45,36 @@ function fetchDataAndDisplayMap () {
             console.error("Error fetching cafe data",error);
         });
 }
+
+
+// Get lattitude and longitude from the api  https://geocode.maps.co/search?q={address}
+
+const cafeNameInput = document.querySelector('#cafe-name').value;
+const cafeAddressInput = document.querySelector('#cafe-address').value;
+const btnForCafe = document.querySelector('#btn-for-cafe');
+function fetchlatandlong () {
+    fetch(` https://geocode.maps.co/search?q={${cafeAddressInput}}`)
+        .then(response => {
+            console.log("response status", response.status);
+            return response.json();
+        })
+        .then(coordinates => {
+            const coordinatesArray = [];
+
+            coordinates.forEach(coordinates => {
+                const {lat,lon} = coordinates;
+                coordinatesArray.push({lat,lon});
+            });
+            console.log("Coordinates Array", coordinatesArray);
+        })
+        .catch(error => {
+            console.log("Error in fetching data", error);
+        })
+
+
+
+}
+
+btnForCafe.addEventListener('click', function () {
+    fetchlatandlong()
+})

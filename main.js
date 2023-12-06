@@ -11,9 +11,9 @@ app.use(express.json());
 app.use(cors());
 
 const connection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
+    host: "localhost",
+    user: "root",
+    password: "/*Insert Password*/",
     database: "cafes_database",
     multipleStatements: true,
 });
