@@ -36,9 +36,11 @@ function fetchDataAndDisplayMap () {
         .then(response=> response.json())
         .then(cafes => {
             cafes.forEach(cafe => {
-               const marker = L.marker([cafe.latitude, cafe.longitude])
+                const { latitude,longitude, cafe_name, address } = cafe;
+
+                const marker = L.marker([latitude, longitude])
                    .addTo(map)
-                   .bindPopup(`<b>${cafe.cafe_name}</b><br>${cafe.address}`)
+                   .bindPopup(`<b>${cafe_name}</b><br>${address}`)
             });
         })
         .catch(error => {
