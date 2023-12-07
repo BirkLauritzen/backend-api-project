@@ -61,19 +61,15 @@ function fetchlatandlong () {
                 return response.json();
             })
             .then(coordinates => {
-                const cafeDataArray = [];
-
-                coordinates.forEach(coordinates => {
-                    const {lat,lon} = coordinates;
-
-                    const cafeData = {
+                const cafeDataArray = coordinates.map(coord => {
+                    const {lat,lon} = coord;
+                    return {
                         latitude: {lat},
                         longitude: {lon},
                         cafe_name: cafeNameInput,
                         address: cafeAddressInput
                     }
-                    cafeDataArray.push(cafeData);
-                });
+                })
                 console.log("Coordinates Array", cafeDataArray);
                 resolve(cafeDataArray);
             })
@@ -89,7 +85,7 @@ function getCoordinatesInDb () {
     fetchlatandlong()
         .then(coordinates => {
             return fetch("http://localhost:3000/new-cafe", {
-                method: 'Post',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -98,7 +94,9 @@ function getCoordinatesInDb () {
         })
 
         .then(response => {
-            console.log("Response",response.status);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
             return response.json();
         })
         .then(cafeData => {
