@@ -38,9 +38,14 @@ function fetchDataAndDisplayMap () {
             cafes.forEach(cafe => {
                 const { latitude,longitude, cafe_name, address } = cafe;
 
-                const marker = L.marker([latitude, longitude])
-                   .addTo(map)
-                   .bindPopup(`<b>${cafe_name}</b><br>${address}`)
+                if (latitude !== null && longitude !== null) {
+                    const marker = L.marker([latitude, longitude])
+                        .addTo(map)
+                        .bindPopup(`<b>${cafe_name}</b><br>${address}`);
+                } else {
+                    // Log cafes with missing or invalid location information
+                    console.warn(`Cafe "${cafe_name}" has missing or invalid location information.`);
+                }
             });
         })
         .catch(error => {

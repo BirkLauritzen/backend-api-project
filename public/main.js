@@ -7,18 +7,26 @@ require('dotenv').config();
 const app = express();
 const port = 3000;
 
+const corsOptions = {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+    exposedHeaders: 'Authorization',
+};
+
+app.use(cors(corsOptions));
+
+
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
 
-app.use(cors());
-
-
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "/*Insert password*/",
+    password: "/*Insert Password*/",
     database: "cafes_database",
     multipleStatements: true,
 });
@@ -117,7 +125,9 @@ Table: cafes
  */
 app.get('/cafe', (req,res)=> {
     const q = `select * from cafes`;
+    console.log("i'm")
     connection.query(q,(error,result)=>{
+        console.log(error,result)
         res.send(result);
     });
 });
