@@ -54,43 +54,48 @@ function fetchDataAndDisplayMap () {
 const cafeNameInput = document.querySelector('#cafe-name').value;
 const cafeAddressInput = document.querySelector('#cafe-address').value;
 function fetchlatandlong () {
-    fetch(` https://geocode.maps.co/search?q={${cafeAddressInput}}`)
-        .then(response => {
-            console.log("response status", response.status);
-            return response.json();
-        })
-        .then(coordinates => {
-            const cafeDataArray = [];
+    return new Promise((resolve, reject) => {
+        fetch(`https://geocode.maps.co/search?q={${cafeAddressInput}}`)
+            .then(response => {
+                console.log("response status", response.status);
+                return response.json();
+            })
+            .then(coordinates => {
+                const cafeDataArray = [];
 
-            coordinates.forEach(coordinates => {
-                const {lat,lon} = coordinates;
+                coordinates.forEach(coordinates => {
+                    const {lat,lon} = coordinates;
 
-                const cafeData = {
-                    latitude: {lat},
-                    longitude: {lon},
-                    cafe_name: cafeNameInput,
-                    address: cafeAddressInput
-                }
+                    const cafeData = {
+                        latitude: {lat},
+                        longitude: {lon},
+                        cafe_name: cafeNameInput,
+                        address: cafeAddressInput
+                    }
+                    cafeDataArray.push(cafeData);
+                });
+                console.log("Coordinates Array", cafeDataArray);
+                resolve(cafeDataArray);
+            })
+            .catch(error => {
+                console.log("Error in fetching data", error);
+                reject(error);
+            })
+    })
 
-                cafeDataArray.push(cafeData);
-            });
-            console.log("Coordinates Array", cafeDataArray);
-            return cafeDataArray;
-        })
-        .catch(error => {
-            console.log("Error in fetching data", error);
-            throw error;
-        })
 }
 
 function getCoordinatesInDb () {
-    fetch("http://localhost:3000/new-cafe", {
-        method: 'Post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(fetchlatandlong()),
-    })
+    fetchlatandlong()
+        .then(coordinates => {
+            return fetch("http://localhost:3000/new-cafe", {
+                method: 'Post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(coordinates),
+            })
+        })
 
         .then(response => {
             console.log("Response",response.status);
