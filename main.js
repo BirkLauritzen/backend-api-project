@@ -87,7 +87,7 @@ app.post('/register', (req, res) => {
 
 app.get('/login', (req, res) => {
     console.log('GET /login');
-    res.sendFile(__dirname + '/public/login/login.html');
+    res.sendFile(__dirname + '/public/login/index.html');
 });
 
 app.post('/login', (req, res) => {
