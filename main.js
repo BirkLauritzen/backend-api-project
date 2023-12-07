@@ -18,7 +18,7 @@ app.use(cors());
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "/*insert password*/",
+    password: "/*Insert password*/",
     database: "cafes_database",
     multipleStatements: true,
 });
