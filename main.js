@@ -51,7 +51,7 @@ const saltRounds = 10;
 
 app.get('/register', (req, res) => {
     console.log('GET /register');
-    res.sendFile(__dirname + '/public/login/register.html');
+    res.sendFile(__dirname + '/login/register.html');
 });
 
 app.post('/register', (req, res) => {
