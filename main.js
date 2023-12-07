@@ -1,19 +1,24 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+
 
 app.use(cors());
+
 
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "/*Insert Password*/",
+    password: "12345678",
     database: "cafes_database",
     multipleStatements: true,
 });
@@ -32,6 +37,80 @@ connection.connect((error) => {
 app.listen(port,()=>{
     console.log(`Application is now running on port ${port}`);
 });
+
+
+const saltRounds = 10;
+
+app.get('/register', (req, res) => {
+    console.log('GET /register');
+    res.sendFile(__dirname + '/public/login/register.html');
+});
+
+app.post('/register', (req, res) => {
+    console.log('POST /register');
+    console.log(req.body); // Logs the data received from the form
+    const username = req.body['new-username'];
+    const password = req.body['new-password'];
+
+    // Check if the password is empty
+    if (!password) {
+        return res.status(400).send('Password is required');
+    }
+
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+        if (err) {
+            console.error('Hashing error:', err);
+            return res.status(500).send('Error hashing password');
+        } else {
+            // Adjusted SQL query to match your database table structure
+            const query = 'INSERT INTO users (username, hashed_password) VALUES (?, ?)';
+            connection.query(query, [username, hash], (error, result) => {
+                if (error) {
+                    console.error(error);
+                    res.status(500).send('Internal server error');
+                } else {
+                    // Redirect to the login page after successful registration
+                    res.redirect('/login.html');
+                }
+            });
+        }
+    });
+});
+
+app.get('/login', (req, res) => {
+    console.log('GET /login');
+    res.sendFile(__dirname + '/public/login/login.html');
+});
+
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    // SQL query to get user by username
+    const query = 'SELECT hashed_password FROM users WHERE username = ?';
+    connection.query(query, [username], (error, users) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('Internal server error');
+        } else if (users.length > 0) {
+            const hashedPassword = users[0].hashed_password;
+
+            bcrypt.compare(password, hashedPassword, function(err, result) {
+                if (result) {
+                    console.log('User authenticated successfully');
+                    res.send('User authenticated successfully');
+                } else {
+                    console.log('Authentication failed');
+                    res.status(401).send('Authentication failed');
+                }
+            });
+        } else {
+            res.status(404).send('User not found');
+        }
+    });
+});
+
+
+
 /*
 app.get /cafe
 Table: cafes
@@ -83,7 +162,7 @@ app.get('/rating', (req,res)=> {
 app.get /user
 Table: users
  */
-app.get('/user', (req,res)=> {
+app.get('/users', (req,res)=> {
     const q = `select * 
                       from users`;
     connection.query(q,(error,result)=>{
@@ -91,7 +170,7 @@ app.get('/user', (req,res)=> {
     });
 });
 
-app.get('/user/:user_id', (req,res)=> {
+app.get('/users/:user_id', (req,res)=> {
     const userIdRequest = req.params.user_id;
     const q = `select * 
                       from users
@@ -146,7 +225,7 @@ app.post(`/new-cafe`,(req,res)=>{
             console.error(error);
             res.status(500).send("Internal server error");
         } else {
-            console.log('Cafe inserted successfully');
+            console.log('cafe inserted successfully');
             res.send("Successful post request");
         }
     });
