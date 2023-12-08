@@ -73,7 +73,7 @@ app.post('/register', (req, res) => {
             return res.status(500).send('Error hashing password');
         } else {
             // Adjusted SQL query to include firstName and lastName
-            const query = 'INSERT INTO users (firstName, lastName, username, hashed_password) VALUES (?, ?, ?, ?)';
+            const query = 'INSERT INTO users (firstName, lastName, email, username, hashed_password) VALUES (?, ?, ?, ?)';
             connection.query(query, [firstName, lastName, username, hash], (error, result) => {
                 if (error) {
                     console.error(error);
