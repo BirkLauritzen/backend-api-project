@@ -65,6 +65,7 @@ nav ul li a:hover {
     padding: 150px;
     background-color: #f0f0f0;
     transition: transform 0.3s ease-in-out;
+    overflow: hidden;
 }
 
 .cafe-box:hover {
@@ -87,3 +88,13 @@ nav ul li a:hover {
     color: inherit;
     font-size: 20px;
 }
+
+
+
+
+.additional-cafe-box {
+    display: none; /* Initially hide additional cafe boxes */
+}
+
+
+
