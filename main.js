@@ -61,6 +61,7 @@ app.post('/register', (req, res) => {
     const password = req.body['new-password'];
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
+    const email = req.body.email;
 
     // Check if the password is empty
     if (!password) {
@@ -73,8 +74,8 @@ app.post('/register', (req, res) => {
             return res.status(500).send('Error hashing password');
         } else {
             // Adjusted SQL query to include firstName and lastName
-            const query = 'INSERT INTO users (firstName, lastName, email, username, hashed_password) VALUES (?, ?, ?, ?)';
-            connection.query(query, [firstName, lastName, username, hash], (error, result) => {
+            const query = 'INSERT INTO users (firstName, lastName, email, username, hashed_password) VALUES (?, ?, ?, ?, ?)';
+            connection.query(query, [firstName, lastName, email, username, hash], (error, result) => {
                 if (error) {
                     console.error(error);
                     res.status(500).send('Internal server error');
