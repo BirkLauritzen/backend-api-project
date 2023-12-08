@@ -60,7 +60,7 @@ const cafeNameInput = document.querySelector('#cafe-name').value;
 const cafeAddressInput = document.querySelector('#cafe-address').value;
 function fetchlatandlong () {
     return new Promise((resolve, reject) => {
-        fetch(`https://geocode.maps.co/search?q=${cafeAddressInput}`)
+        fetch(`https://geocode.maps.co/search?q=${encodeURIComponent(cafeAddressInput)}`)
             .then(response => {
                 console.log("response status", response);
                 return response.json();
@@ -69,8 +69,8 @@ function fetchlatandlong () {
                 const cafeDataArray = coordinates.map(coord => {
                     const {lat,lon} = coord;
                     return {
-                        latitude: {lat},
-                        longitude: {lon},
+                        latitude: lat,
+                        longitude: lon,
                         cafe_name: cafeNameInput,
                         address: cafeAddressInput
                     };
