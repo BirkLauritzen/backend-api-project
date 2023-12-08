@@ -51,7 +51,7 @@ const saltRounds = 10;
 
 app.get('/register', (req, res) => {
     console.log('GET /register');
-    res.sendFile(__dirname + '/public/login/register.html');
+    res.sendFile(__dirname + '/login/register.html');
 });
 
 app.post('/register', (req, res) => {
@@ -59,6 +59,8 @@ app.post('/register', (req, res) => {
     console.log(req.body); // Logs the data received from the form
     const username = req.body['new-username'];
     const password = req.body['new-password'];
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
 
     // Check if the password is empty
     if (!password) {
@@ -70,24 +72,25 @@ app.post('/register', (req, res) => {
             console.error('Hashing error:', err);
             return res.status(500).send('Error hashing password');
         } else {
-            // Adjusted SQL query to match your database table structure
-            const query = 'INSERT INTO users (username, hashed_password) VALUES (?, ?)';
-            connection.query(query, [username, hash], (error, result) => {
+            // Adjusted SQL query to include firstName and lastName
+            const query = 'INSERT INTO users (firstName, lastName, username, hashed_password) VALUES (?, ?, ?, ?)';
+            connection.query(query, [firstName, lastName, username, hash], (error, result) => {
                 if (error) {
                     console.error(error);
                     res.status(500).send('Internal server error');
                 } else {
-                    // Redirect to the login page after successful registration
-                    res.redirect('/login.html');
+                    // Redirect to the index page after successful registration
+                    res.redirect('/login');
                 }
             });
         }
     });
 });
 
+
 app.get('/login', (req, res) => {
     console.log('GET /login');
-    res.sendFile(__dirname + '/public/login/login.html');
+    res.sendFile(__dirname + '/index.html');
 });
 
 app.post('/login', (req, res) => {
@@ -105,7 +108,8 @@ app.post('/login', (req, res) => {
             bcrypt.compare(password, hashedPassword, function(err, result) {
                 if (result) {
                     console.log('User authenticated successfully');
-                    res.send('User authenticated successfully');
+                    // Redirect to the index page after successful login
+                    res.redirect('/cafe');
                 } else {
                     console.log('Authentication failed');
                     res.status(401).send('Authentication failed');
@@ -116,6 +120,7 @@ app.post('/login', (req, res) => {
         }
     });
 });
+
 
 
 
@@ -201,7 +206,7 @@ app.post(`/new-user`,(req,res)=>{
     const lastName = req.body.last_name;
 
     const q = `insert into users
-                      (first_name,last_name) values (?,?)`;
+                      (firstName,lastName) values (?,?)`;
 
     connection.query(q,[firstName,lastName], (error,result) => {
         if (error) {
@@ -254,11 +259,11 @@ app.post(`/new-favorite`,(req,res)=>{
     const lastName = req.body.last_name;
 
     const insertFavoriteQ = `insert into favorites
-                                    (cafe_id,favorite_cafe_name,users_id,first_name,last_name) 
+                                    (cafe_id,favorite_cafe_name,users_id,firstName,lastName) 
                                     values(
                                     (select cafe_id from cafes where cafe_name = ?), 
                                     ?,
-                                    (select users_id from users where first_name = ? and last_name = ?),
+                                    (select users_id from users where firstName = ? and lastName = ?),
                                     ?,
                                     ? 
                                     )`;
@@ -273,7 +278,7 @@ app.post(`/new-favorite`,(req,res)=>{
 
         const checkUserQ = `select users_id
                                     from users 
-                                    where first_name = ? and last_name = ?
+                                    where firstName = ? and lastName = ?
         `;
 
         connection.query(checkUserQ,[firstName,lastName], (error,userResult) => {
@@ -284,7 +289,7 @@ app.post(`/new-favorite`,(req,res)=>{
 
            if (userResult.length === 0) {
                const createUserQ = `Insert into users 
-                                            (first_name,last_name) 
+                                            (firstName,lastName) 
                                             values (?,?)
                `;
                 connection.query(createUserQ,[firstName,lastName], (error,createUserResult) => {
