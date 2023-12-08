@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+    <link rel="stylesheet" href="mapofcafes-css.css">
+<body>
+
+<header>
+    <div class="logo">
+        <a href="../frontpage/frontpage.html">
+            <img src="../images/Stars-Coffee-Logo.png" alt="stars coffee logo"/>
+        </a>
+    </div>
+    <div class="account-login-reg">
+        <a href="../login/register.html">Register</a>
+        <a href="login.html">Login</a>
+    </div>
+</header>
+<nav>
+    <ul>
+        <li><a href="mapofcafes.html">Cafes</a></li>
+        <li><a href="../user/user_account.html">User Account</a></li>
+        <li><a href="../public/ratings.html">Rating Page</a></li>
+        <li><a href="something.html">test</a></li>
+        <!-- add more stuff -->
+
+    </ul>
+</nav>
+
+<main>
+    <section class="list-of-cafes">
+        <h1>Cafes in Copenhagen</h1>
+        <div id="cafe"></div>
+    </section>
+
+    <section class="create-new-cafe">
+        <input type="text" id="cafe-name">
+        <label for="cafe-name">Cafe name</label>
+        <input type="text" id="cafe-address">
+        <label for="cafe-address">Address for the cafe</label>
+        <button id="btn-for-cafe">Submit</button>
+    </section>
+
+    <section class="map">
+        <div id="map" style="height: 500px"></div>
+    </section>
+
+</main>
+
+<section class="cafe-info-section">
+    <div class="cafe-box" id="cafe1">
+        <p>cafe 1</p>
+    </div>
+    <div class="cafe-box" id="cafe2">
+        <p>cafe 2</p>
+    </div>
+    <div class="cafe-box" id="cafe3">
+        <p>cafe 3</p>
+    </div>
+    <div class="cafe-box" id="cafe4">
+        <p>cafe 4</p>
+    </div>
+    <div class="cafe-box" id="cafe5">
+        <p>cafe 5</p>
+    </div>
+    <div class="cafe-box" id="cafe6">
+        <p>cafe 6</p>
+    </div>
+    <div class="cafe-box" id="add_another_cafe">
+        <a href="add_cafe.html" class="add-cafe-link">
+            <div class="add-cafe-content">
+                <p>Click here to add your favorite cafe!</p>
+            </div>
+        </a>
+    </div>
+
+
+</section>
+<script src="../common.js"></script>
+<script src="../../cafe.js"></script>
+</body>
+</html>
