@@ -1,6 +1,11 @@
 /* Uses the schema cafes_database so the tables are created in the right database */
 USE cafes_database;
 
+/* Get the database */
+select * from cafes;
+select * from users;
+select * from favorites;
+
 /* Drop tables if they exist to avoid errors */
 DROP TABLE IF EXISTS favorites;
 DROP TABLE IF EXISTS users;
