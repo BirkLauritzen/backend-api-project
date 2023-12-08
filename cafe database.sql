@@ -10,30 +10,50 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS cafes;
 
 /* Create tables */
-CREATE TABLE cafes (
-cafe_id INT PRIMARY KEY,
-cafe_name VARCHAR(100),
-descriptions TEXT,
-address VARCHAR(100),
-rating DECIMAL(2,1),
-longitude DECIMAL(9,6),
-latitude DECIMAL(9,6)
-);
+create table cafes
+(
+    cafe_id      int           not null
+        primary key,
+    cafe_name    varchar(100)  null,
+    descriptions text          null,
+    address      varchar(100)  null,
+    rating       decimal(2, 1) null,
+    longitude    decimal(9, 6) null,
+    latitude     decimal(9, 6) null
+)
+    engine = InnoDB;
 
-CREATE TABLE users (
-users_id INT PRIMARY KEY,
-first_name VARCHAR(100),
-last_name VARCHAR(100)
-);
+create table users
+(
+    users_id        int auto_increment
+        primary key,
+    firstName       varchar(100) null,
+    lastName        varchar(100) null,
+    username        varchar(255) not null,
+    hashed_password char(60)     not null,
+    constraint username
+        unique (username)
+)
+    engine = InnoDB;
 
-CREATE TABLE favorites (
-favorite_id INT AUTO_INCREMENT PRIMARY KEY,
-cafe_id INT,
-favorite_cafe_name VARCHAR(255),
-users_id INT,
-FOREIGN KEY (cafe_id) REFERENCES cafes(cafe_id),
-FOREIGN KEY (users_id) REFERENCES users(users_id)
-);
+create table favorites
+(
+    favorite_id        int auto_increment
+        primary key,
+    cafe_id            int          null,
+    favorite_cafe_name varchar(255) null,
+    users_id           int          null,
+    constraint favorites_ibfk_1
+        foreign key (cafe_id) references cafes (cafe_id),
+    constraint users_id
+        foreign key (users_id) references users (users_id)
+)
+    engine = InnoDB;
+
+create index cafe_id
+    on favorites (cafe_id);
+
+
 
 /* Insert data into cafes */
 INSERT INTO cafes (cafe_id, cafe_name, descriptions, address, rating, longitude, latitude)
@@ -56,7 +76,7 @@ VALUES
 ('16', 'Riccos', NULL, 'Istedgade 119, 1650 Copenhagen', '3', '12.548264', '55.667615');
 
 /* Insert data into users */
-INSERT INTO users (users_id, first_name, last_name) VALUES
+INSERT INTO users (users_id, firstName, lastName) VALUES
 (1, 'John', 'Doe'),
 (2, 'Alice', 'Smith'),
 (3, 'Bob', 'Johnson'),
