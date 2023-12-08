@@ -223,14 +223,14 @@ it automatically creates a new cafe_id to the cafe there's been added to the tab
  */
 app.post(`/new-cafe`,(req,res)=>{
     const cafeName = req.body.cafe_name;
-    const description = req.body.descriptions;
+    const descriptions = req.body.descriptions;
     const address = req.body.address;
     const rating = req.body.rating;
 
     const q = `insert into cafes
                       (cafe_name, descriptions,address,rating) values (?,?,?,?)`;
 
-    connection.query(q,[cafeName,description,address,rating], (error,result) => {
+    connection.query(q,[cafeName,descriptions,address,rating], (error,result) => {
         if (error) {
             console.error(error);
             res.status(500).send("Internal server error");
