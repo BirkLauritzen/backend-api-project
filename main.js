@@ -51,7 +51,7 @@ const saltRounds = 10;
 
 app.get('/register', (req, res) => {
     console.log('GET /register');
-    res.sendFile(__dirname + '/login/register.html');
+    res.sendFile(__dirname + '/public/login/register.html');
 });
 
 app.post('/register', (req, res) => {
@@ -91,7 +91,7 @@ app.post('/register', (req, res) => {
 
 app.get('/login', (req, res) => {
     console.log('GET /login');
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + 'index.html');
 });
 
 app.post('/login', (req, res) => {
@@ -110,7 +110,7 @@ app.post('/login', (req, res) => {
                 if (result) {
                     console.log('User authenticated successfully');
                     // Redirect to the index page after successful login
-                    res.redirect('/cafe');
+                    res.redirect('frontpage.html');
                 } else {
                     console.log('Authentication failed');
                     res.status(401).send('Authentication failed');
@@ -122,7 +122,10 @@ app.post('/login', (req, res) => {
     });
 });
 
-
+app.get('/overview', (req, res) => {
+    console.log('GET /overview');
+    res.sendFile(__dirname + 'frontpage.html');
+});
 
 
 /*
