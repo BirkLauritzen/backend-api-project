@@ -56,23 +56,22 @@ function fetchDataAndDisplayMap () {
 
 // Get latitude and longitude from the api  https://geocode.maps.co/search?q={address}
 
-const cafeNameInput = document.querySelector('#cafe-name').value;
-const cafeAddressInput = document.querySelector('#cafe-address').value;
-function fetchlatandlong () {
+function fetchlatandlong (cafeName,cafeAddress,city,postalCode) {
     return new Promise((resolve, reject) => {
-        fetch(`https://geocode.maps.co/search?q=${encodeURIComponent(cafeAddressInput)}`)
+        const apiUrl = `https://nominatim.openstreetmap.org/search?street=${encodeURIComponent(cafeAddress)}&city=${encodeURIComponent(city)}&postalcode=${encodeURIComponent(postalCode)}&format=json`
+        fetch(apiUrl)
             .then(response => {
                 console.log("response status", response);
                 return response.json();
             })
             .then(coordinates => {
                 const cafeDataArray = coordinates.map(coord => {
-                    const {lat,lon} = coord;
+                    const {lat,lon,display_name} = coord;
                     return {
-                        latitude: lat,
-                        longitude: lon,
-                        cafe_name: cafeNameInput,
-                        address: cafeAddressInput
+                        latitude: parseFloat(lat),
+                        longitude: parseFloat(lon),
+                        cafe_name: cafeName,
+                        address: display_name
                     };
                 })
                 console.log("Coordinates Array", cafeDataArray);
@@ -86,23 +85,27 @@ function fetchlatandlong () {
 
 }
 
-function getCoordinatesInDb () {
-    fetchlatandlong()
+function getCoordinatesInDb (cafeName,cafeAddress,city,postalCode) {
+    fetchlatandlong(cafeName,cafeAddress,city,postalCode)
         .then(data => {
-            return fetch("http://localhost:3000/new-cafe", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data),
-            })
+            const fetchRequest = data.map(coordinates => {
+                return fetch("http://localhost:3000/new-cafe", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(coordinates),
+                });
+            });
+            return Promise.all(fetchRequest);
         })
 
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+        .then(responses => {
+            const isError = responses.some(response => !response.ok);
+            if (isError) {
+                throw new Error(`One or more request failed`);
             }
-            return response.json();
+            return Promise.all(responses.map(response => response.json()));
         })
         .then(cafeData => {
             console.log('Server response',cafeData);
