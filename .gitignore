@@ -1,3 +1,4 @@
 /information.env
 /node_modules
 /.idea
+.env

@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "/*Insert Password*/",
+    password: process.env.DB_PASSWORD,
     database: "cafes_database",
     multipleStatements: true,
 });
