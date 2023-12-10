@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const bcrypt = require('bcrypt');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -88,10 +89,9 @@ app.post('/register', (req, res) => {
     });
 });
 
-
-app.get('/login', (req, res) => {
+app.get('/login', function(req, res) {
     console.log('GET /login');
-    res.sendFile(__dirname + 'index.html');
+    res.sendFile(path.join(__dirname, './index.html'));
 });
 
 app.post('/login', (req, res) => {
@@ -110,7 +110,7 @@ app.post('/login', (req, res) => {
                 if (result) {
                     console.log('User authenticated successfully');
                     // Redirect to the index page after successful login
-                    res.redirect('frontpage.html');
+                    res.redirect('/overview');
                 } else {
                     console.log('Authentication failed');
                     res.status(401).send('Authentication failed');
@@ -122,9 +122,9 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.get('/overview', (req, res) => {
+app.get('/overview', function(req, res) {
     console.log('GET /overview');
-    res.sendFile(__dirname + 'frontpage.html');
+    res.sendFile(path.join(__dirname, './public/frontpage/frontpage.html'));
 });
 
 
