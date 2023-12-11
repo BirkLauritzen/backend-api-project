@@ -11,6 +11,9 @@ DROP TABLE IF EXISTS favorites;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS cafes;
 
+/* Delete statement */
+delete from cafes where cafe_id in (20,21,22,23,24,25,26,27,28,29,30);
+
 /* Create tables */
 create table cafes
 (
