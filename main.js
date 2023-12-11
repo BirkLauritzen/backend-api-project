@@ -56,8 +56,8 @@ app.get('/register', (req, res) => {
 app.post('/register', (req, res) => {
     console.log('POST /register');
     console.log(req.body); // Logs the data received from the form
-    const username = req.body['new-username'];
-    const password = req.body['new-password'];
+    const username = req.body['newUsername'];
+    const password = req.body['newPassword'];
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
@@ -72,14 +72,17 @@ app.post('/register', (req, res) => {
             console.error('Hashing error:', err);
             return res.status(500).send('Error hashing password');
         } else {
-            // Adjusted SQL query to include firstName and lastName
             const query = 'INSERT INTO users (firstName, lastName, email, username, hashed_password) VALUES (?, ?, ?, ?, ?)';
             connection.query(query, [firstName, lastName, email, username, hash], (error, result) => {
                 if (error) {
-                    console.error(error);
-                    res.status(500).send('Internal server error');
+                    if (error.code === 'ER_DUP_ENTRY' || error.errno === 1062) {
+                        console.error('Duplicate entry:', error);
+                        return res.status(409).send('Username or email already exists');
+                    } else {
+                        console.error(error);
+                        return res.status(500).send('Internal server error');
+                    }
                 } else {
-                    // Redirect to the index page after successful registration
                     res.redirect('/login');
                 }
             });
