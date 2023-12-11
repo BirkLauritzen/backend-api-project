@@ -22,11 +22,10 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
-
 const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "/*Insert Password*/",
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
     database: "cafes_database",
     multipleStatements: true,
 });
