@@ -3,6 +3,7 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const bcrypt = require('bcrypt');
 require('dotenv').config();
+const path = require('path');
 
 const app = express();
 const port = 3000;
@@ -72,7 +73,7 @@ app.post('/register', (req, res) => {
             return res.status(500).send('Error hashing password');
         } else {
             // Adjusted SQL query to include firstName and lastName
-            const query = 'INSERT INTO users (first_name, last_name, email, username, hashed_password) VALUES (?, ?, ?, ?, ?)';
+            const query = 'INSERT INTO users (firstName, lastName, email, username, hashed_password) VALUES (?, ?, ?, ?, ?)';
             connection.query(query, [firstName, lastName, email, username, hash], (error, result) => {
                 if (error) {
                     console.error(error);
@@ -108,7 +109,7 @@ app.post('/login', (req, res) => {
                 if (result) {
                     console.log('User authenticated successfully');
                     // Redirect to the index page after successful login
-                    res.redirect('/cafe');
+                    res.redirect('/overview');
                 } else {
                     console.log('Authentication failed');
                     res.status(401).send('Authentication failed');
@@ -120,7 +121,10 @@ app.post('/login', (req, res) => {
     });
 });
 
-
+app.get('/overview', function(req, res) {
+    console.log('GET /overview');
+res.sendFile(path.join(__dirname, './public/frontpage/frontpage.html'));
+});
 
 
 /*
@@ -205,7 +209,7 @@ app.post(`/new-user`,(req,res)=>{
     const lastName = req.body.last_name;
 
     const q = `insert into users
-                      (first_name,last_name) values (?,?)`;
+                      (firstName,lastName) values (?,?)`;
 
     connection.query(q,[firstName,lastName], (error,result) => {
         if (error) {
@@ -258,11 +262,11 @@ app.post(`/new-favorite`,(req,res)=>{
     const lastName = req.body.last_name;
 
     const insertFavoriteQ = `insert into favorites
-                                    (cafe_id,favorite_cafe_name,users_id,first_name,last_name) 
+                                    (cafe_id,favorite_cafe_name,users_id,firstName,lastName) 
                                     values(
                                     (select cafe_id from cafes where cafe_name = ?), 
                                     ?,
-                                    (select users_id from users where users.first_name = ? and users.last_name = ?),
+                                    (select users_id from users where users.firstName = ? and users.lastName = ?),
                                     ?,
                                     ? 
                                     )`;
@@ -277,7 +281,7 @@ app.post(`/new-favorite`,(req,res)=>{
 
         const checkUserQ = `select users_id
                                     from users 
-                                    where first_name = ? and last_name = ?
+                                    where firstName = ? and lastName = ?
         `;
 
         connection.query(checkUserQ,[firstName,lastName], (error,userResult) => {
@@ -288,7 +292,7 @@ app.post(`/new-favorite`,(req,res)=>{
 
            if (userResult.length === 0) {
                const createUserQ = `Insert into users 
-                                            (first_name,last_name) 
+                                            (firstName,lastName) 
                                             values (?,?)
                `;
                 connection.query(createUserQ,[firstName,lastName], (error,createUserResult) => {
