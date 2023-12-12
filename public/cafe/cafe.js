@@ -5,3 +5,7 @@ document.addEventListener('DOMContentLoaded',function () {
 document.addEventListener("DOMContentLoaded",function (){
     fetchDataAndDisplayMap();
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetchCafeDataAndDisplayInTheBox();
+})

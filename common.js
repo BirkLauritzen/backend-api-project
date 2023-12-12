@@ -114,3 +114,37 @@ function getCoordinatesInDb (cafeName,cafeAddress,city,postalCode) {
             console.log("Error message", error);
         })
 }
+
+function fetchCafeDataAndDisplayInTheBox () {
+    fetch('http://localhost:3000/cafe')
+        .then(response => {
+            console.log("Response", response.status);
+            return response.json();
+        })
+        .then(cafeData => {
+            const cafeSection = document.querySelector('.cafe-info-section');
+
+            cafeData.forEach((cafe, index) => {
+                const cafeBox = document.createElement('div');
+                cafeBox.classList.add('cafe-box');
+                cafeBox.id = 'cafe' + (index + 1);
+
+                const pTagCafeName = document.createElement('p');
+                pTagCafeName.textContent = cafe.cafe_name;
+
+                const pTagDescription = document.createElement('p');
+                pTagDescription.textContent = cafe.descriptions;
+
+                const pTagAddress = document.createElement('p');
+                pTagAddress.textContent = cafe.address;
+
+                cafeBox.appendChild(pTagCafeName);
+                cafeBox.appendChild(pTagDescription);
+                cafeBox.appendChild(pTagAddress);
+                cafeSection.appendChild(cafeBox);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching the cafe data', error);
+        })
+}
