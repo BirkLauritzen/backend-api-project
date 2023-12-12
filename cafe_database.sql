@@ -57,6 +57,27 @@ ALTER TABLE cafes
 UPDATE cafes SET has_wifi = true WHERE cafes.cafe_id IN (1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 15, 16);
 UPDATE cafes SET has_wifi = false WHERE cafes.cafe_id IN (8, 12, 13, 14);
 
+UPDATE cafes
+SET address = CASE
+                  WHEN cafe_id = 1 THEN 'Amagertorv 1, 1160 København K'
+                  WHEN cafe_id = 2 THEN 'Ny Østergade 8, 1101 København K'
+                  WHEN cafe_id = 3 THEN 'Krystalgade 15, 1172 København K'
+                  WHEN cafe_id = 4 THEN 'Sønder Boulevard 73, 1720 København V'
+                  WHEN cafe_id = 5 THEN 'Gl. Kongevej 108, 1850 Frederiksberg'
+                  WHEN cafe_id = 6 THEN 'Fiolstræde 10, 1171 København K'
+                  WHEN cafe_id = 7 THEN 'Bispebjerg Torv 8, 2400 København NV'
+                  WHEN cafe_id = 8 THEN 'Knabrostræde 26, 1210 København K'
+                  WHEN cafe_id = 9 THEN 'Skt. Hans Torv 3, 2200 København N'
+                  WHEN cafe_id = 10 THEN 'Sønder Boulevard 72, 1720 København V'
+                  WHEN cafe_id = 11 THEN 'Larsbjørnsstræde 17, 1454 København K'
+                  WHEN cafe_id = 12 THEN 'Kronprinsensgade 6, 1114 København K'
+                  WHEN cafe_id = 13 THEN 'Nørrebrogade 88, 2200 København N'
+                  WHEN cafe_id = 14 THEN 'Østergade 61, 1100 København K'
+                  WHEN cafe_id = 15 THEN 'Købmagergade 52, 1150 København K'
+                  WHEN cafe_id = 16 THEN 'Istedgade 119, 1650 København V'
+                  ELSE address
+    END;
+
 create table favorites
 (
     favorite_id        int auto_increment
