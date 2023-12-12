@@ -44,12 +44,18 @@ create table users
         unique (email)
 )
     engine = InnoDB;
-/* Update*/
+/* Update to the user table*/
 alter table users
 change column firstName first_name;
 
 alter table users
 change column lastName last_name;
+
+/* Update to the cafes table */
+ALTER TABLE cafes
+    ADD COLUMN has_wifi BOOLEAN;
+UPDATE cafes SET has_wifi = true WHERE cafes.cafe_id IN (1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 15, 16);
+UPDATE cafes SET has_wifi = false WHERE cafes.cafe_id IN (8, 12, 13, 14);
 
 create table favorites
 (
