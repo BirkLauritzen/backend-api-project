@@ -43,6 +43,12 @@ create table users
         unique (email)
 )
     engine = InnoDB;
+/* Update*/
+alter table users
+change column firstName first_name;
+
+alter table users
+change column lastName last_name;
 
 create table favorites
 (
