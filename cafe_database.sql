@@ -5,6 +5,7 @@ USE cafes_database;
 select * from cafes;
 select * from users;
 select * from favorites;
+select * from opening_hours;
 
 /* Drop tables if they exist to avoid errors */
 DROP TABLE IF EXISTS favorites;
@@ -63,6 +64,16 @@ create table favorites
         foreign key (users_id) references users (users_id)
 )
     engine = InnoDB;
+
+CREATE TABLE opening_hours (
+                               id INT auto_increment PRIMARY KEY,
+                               cafe_id INT,
+                               day_of_week VARCHAR(10),
+                               opening_time TIME,
+                               closing_time TIME,
+                               FOREIGN KEY (cafe_id) REFERENCES cafes(cafe_id)
+);
+
 
 create index cafe_id
     on favorites (cafe_id);
