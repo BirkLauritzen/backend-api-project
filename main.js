@@ -4,6 +4,7 @@ const cors = require("cors");
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 const path = require('path');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = 3000;
@@ -177,6 +178,28 @@ app.get('/rating', (req,res)=> {
     });
 });
 
+app.get('/api/user-info', (req, res) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (token == null) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+
+        const query = 'SELECT * FROM users WHERE username = ?';
+        connection.query(query, [user.username], (error, users) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Internal server error');
+            } else if (users.length > 0) {
+                res.json(users[0]);
+            } else {
+                res.status(404).send('User not found');
+            }
+        });
+    });
+});
 
 /*
 app.get /user
