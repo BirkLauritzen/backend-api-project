@@ -43,7 +43,6 @@ function fetchDataAndDisplayMap () {
                         .addTo(map)
                         .bindPopup(`<b>${cafe_name}</b><br>${address}`);
                 } else {
-                    // Log cafes with missing or invalid location information
                     console.warn(`Cafe "${cafe_name}" has missing or invalid location information.`);
                 }
             });
