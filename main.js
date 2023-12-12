@@ -136,7 +136,6 @@ Table: cafes
  */
 app.get('/cafe', (req,res)=> {
     const q = `select * from cafes`;
-    console.log("i'm")
     connection.query(q,(error,result)=>{
         console.log(error,result)
         res.send(result);
