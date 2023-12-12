@@ -131,12 +131,15 @@ function fetchCafeDataAndDisplayInTheBox () {
 
                 const pTagCafeName = document.createElement('p');
                 pTagCafeName.textContent = cafe.cafe_name;
+                pTagCafeName.id = 'pTagCafeName' + (index + 1);
 
                 const pTagDescription = document.createElement('p');
                 pTagDescription.textContent = cafe.descriptions;
+                pTagDescription.id = 'pTagDescription' + (index + 1);
 
                 const pTagAddress = document.createElement('p');
                 pTagAddress.textContent = cafe.address;
+                pTagAddress.id = 'pTagAddress' + (index + 1);
 
                 cafeBox.appendChild(pTagCafeName);
                 cafeBox.appendChild(pTagDescription);
