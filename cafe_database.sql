@@ -12,9 +12,6 @@ DROP TABLE IF EXISTS favorites;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS cafes;
 
-/* Delete statement */
-delete from cafes where cafe_id in (20,21,22,23,24,25,26,27,28,29,30);
-
 /* Create tables */
 create table cafes
 (
@@ -44,12 +41,6 @@ create table users
         unique (email)
 )
     engine = InnoDB;
-/* Update to the user table*/
-alter table users
-change column firstName first_name;
-
-alter table users
-change column lastName last_name;
 
 /* Update to the cafes table */
 ALTER TABLE cafes
@@ -128,17 +119,17 @@ VALUES
     ('16', 'Riccos', NULL, 'Istedgade 119, 1650 Copenhagen', '3', '12.548264', '55.667615');
 
 /* Insert data into users */
-INSERT INTO users (users_id, firstName, lastName, email, username, hashed_password) VALUES
-                                                                                 (1, 'John', 'Doe', 'john.doe@example.com', 'johndoe', 'hashedpassword1'),
-                                                                                 (2, 'Alice', 'Smith', 'alice.smith@example.com', 'alicesmith', 'hashedpassword2'),
-                                                                                 (3, 'Bob', 'Johnson', 'bob.johnson@example.com', 'bobjohnson', 'hashedpassword3'),
-                                                                                 (4, 'Emily', 'Williams', 'emily.williams@example.com', 'emilywilliams', 'hashedpassword4'),
-                                                                                 (5, 'Michael', 'Jones', 'michael.jones@example.com', 'michaeljones', 'hashedpassword5'),
-                                                                                 (6, 'Sophia', 'Brown', 'sophia.brown@example.com', 'sophiabrown', 'hashedpassword6'),
-                                                                                 (7, 'Daniel', 'Taylor', 'daniel.taylor@example.com', 'danieltaylor', 'hashedpassword7'),
-                                                                                 (8, 'Olivia', 'Miller', 'olivia.miller@example.com', 'oliviamiller', 'hashedpassword8'),
-                                                                                 (9, 'David', 'Anderson', 'david.anderson@example.com', 'davidanderson', 'hashedpassword9'),
-                                                                                 (10, 'Emma', 'Davis', 'emma.davis@example.com', 'emmadavis', 'hashedpassword10');
+INSERT INTO users (users_id, first_name, last_name, email, username, hashed_password) VALUES
+                                                                                          (1, 'John', 'Doe', 'john.doe@example.com', 'johndoe', 'hashedpassword1'),
+                                                                                          (2, 'Alice', 'Smith', 'alice.smith@example.com', 'alicesmith', 'hashedpassword2'),
+                                                                                          (3, 'Bob', 'Johnson', 'bob.johnson@example.com', 'bobjohnson', 'hashedpassword3'),
+                                                                                          (4, 'Emily', 'Williams', 'emily.williams@example.com', 'emilywilliams', 'hashedpassword4'),
+                                                                                          (5, 'Michael', 'Jones', 'michael.jones@example.com', 'michaeljones', 'hashedpassword5'),
+                                                                                          (6, 'Sophia', 'Brown', 'sophia.brown@example.com', 'sophiabrown', 'hashedpassword6'),
+                                                                                          (7, 'Daniel', 'Taylor', 'daniel.taylor@example.com', 'danieltaylor', 'hashedpassword7'),
+                                                                                          (8, 'Olivia', 'Miller', 'olivia.miller@example.com', 'oliviamiller', 'hashedpassword8'),
+                                                                                          (9, 'David', 'Anderson', 'david.anderson@example.com', 'davidanderson', 'hashedpassword9'),
+                                                                                          (10, 'Emma', 'Davis', 'emma.davis@example.com', 'emmadavis', 'hashedpassword10');
 
 /* Insert data into favorites */
 INSERT INTO favorites (cafe_id, favorite_cafe_name, users_id) VALUES
