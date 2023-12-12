@@ -32,8 +32,8 @@ create table users
 (
     users_id        int auto_increment
         primary key,
-    firstName       varchar(100) null,
-    lastName        varchar(100) null,
+    first_name       varchar(100) null,
+    last_name        varchar(100) null,
     email           varchar(100) not null,
     username        varchar(255) not null,
     hashed_password char(60)     not null,
