@@ -61,7 +61,6 @@ nav ul li a:hover {
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 20px;
-    font-size: 50px;
     text-align: center;
 }
 
@@ -71,6 +70,7 @@ nav ul li a:hover {
     padding: 150px;
     background-color: #f0f0f0;
     transition: transform 0.3s ease-in-out;
+    font-size: 20px;
 }
 
 .cafe-box:hover {
