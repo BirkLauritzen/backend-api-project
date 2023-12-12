@@ -73,7 +73,7 @@ app.post('/register', (req, res) => {
             console.error('Hashing error:', err);
             return res.status(500).send('Error hashing password');
         } else {
-            const query = 'INSERT INTO users (firstName, lastName, email, username, hashed_password) VALUES (?, ?, ?, ?, ?)';
+            const query = 'INSERT INTO users (first_name, last_name, email, username, hashed_password) VALUES (?, ?, ?, ?, ?)';
             connection.query(query, [firstName, lastName, email, username, hash], (error, result) => {
                 if (error) {
                     if (error.code === 'ER_DUP_ENTRY' || error.errno === 1062) {
@@ -128,6 +128,11 @@ app.post('/login', (req, res) => {
 app.get('/overview', function(req, res) {
     console.log('GET /overview');
 res.sendFile(path.join(__dirname, './public/frontpage/frontpage.html'));
+});
+
+app.get('/index.html', (req, res) => {
+    console.log('GET /index.html');
+    res.sendFile(__dirname + '/index.html');
 });
 
 
