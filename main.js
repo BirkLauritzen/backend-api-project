@@ -293,6 +293,7 @@ app.post(`/new-cafe`,(req,res)=>{
     });
 
 });
+
 /*
 app.post
 Table: favorites
@@ -300,6 +301,7 @@ It adds new favorite cafes,
 where it inputs name and check if the person is a user
 and if not it creates a new user.
  */
+
 /*
 app.post('/new-favorite', isLoggedIn, (req, res) => {
     if (req.session.user) {
