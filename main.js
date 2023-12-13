@@ -1,4 +1,5 @@
 const express = require("express");
+const expressSession = require("express-session")
 const mysql = require("mysql2");
 const cors = require("cors");
 const bcrypt = require('bcrypt');
@@ -22,6 +23,11 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.use(expressSession({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true
+}))
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -112,6 +118,9 @@ app.post('/login', (req, res) => {
             bcrypt.compare(password, hashedPassword, function(err, result) {
                 if (result) {
                     console.log('User authenticated successfully');
+
+                    req.session.user = username;
+
                     // Redirect to the index page after successful login
                     res.redirect('/overview');
                 } else {
@@ -127,7 +136,12 @@ app.post('/login', (req, res) => {
 
 app.get('/overview', function(req, res) {
     console.log('GET /overview');
-res.sendFile(path.join(__dirname, './public/frontpage/frontpage.html'));
+    if (req.session.user) {
+        res.sendFile(__dirname + '/public/frontpage/frontpage.html');
+    } else {
+        res.redirect('/login');
+    }
+//res.sendFile(path.join(__dirname, './public/frontpage/frontpage.html'));
 });
 
 app.get('/index.html', (req, res) => {
