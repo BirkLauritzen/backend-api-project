@@ -4,6 +4,7 @@ const cors = require("cors");
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 const path = require('path');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = 3000;
@@ -58,8 +59,8 @@ app.post('/register', (req, res) => {
     console.log(req.body); // Logs the data received from the form
     const username = req.body['newUsername'];
     const password = req.body['newPassword'];
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
+    const first_name = req.body.first_name;
+    const last_name = req.body.last_name;
     const email = req.body.email;
 
     // Check if the password is empty
@@ -72,8 +73,8 @@ app.post('/register', (req, res) => {
             console.error('Hashing error:', err);
             return res.status(500).send('Error hashing password');
         } else {
-            const query = 'INSERT INTO users (firstName, lastName, email, username, hashed_password) VALUES (?, ?, ?, ?, ?)';
-            connection.query(query, [firstName, lastName, email, username, hash], (error, result) => {
+            const query = 'INSERT INTO users (first_name, last_name, email, username, hashed_password) VALUES (?, ?, ?, ?, ?)';
+            connection.query(query, [first_name, last_name, email, username, hash], (error, result) => {
                 if (error) {
                     if (error.code === 'ER_DUP_ENTRY' || error.errno === 1062) {
                         console.error('Duplicate entry:', error);
@@ -129,6 +130,11 @@ app.get('/overview', function(req, res) {
 res.sendFile(path.join(__dirname, './public/frontpage/frontpage.html'));
 });
 
+app.get('/index.html', (req, res) => {
+    console.log('GET /index.html');
+    res.sendFile(__dirname + '/index.html');
+});
+
 
 /*
 app.get /cafe
@@ -177,6 +183,28 @@ app.get('/rating', (req,res)=> {
     });
 });
 
+app.get('/api/user-info', (req, res) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (token == null) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+
+        const query = 'SELECT * FROM users WHERE username = ?';
+        connection.query(query, [user.username], (error, users) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Internal server error');
+            } else if (users.length > 0) {
+                res.json(users[0]);
+            } else {
+                res.status(404).send('User not found');
+            }
+        });
+    });
+});
 
 /*
 app.get /user
@@ -207,13 +235,13 @@ Insert new user into the user table
 It automatically creates a new user_id to the user been added.
  */
 app.post(`/new-user`,(req,res)=>{
-    const firstName = req.body.first_name;
-    const lastName = req.body.last_name;
+    const first_name = req.body.first_name;
+    const last_name = req.body.last_name;
 
     const q = `insert into users
                       (first_name,last_name) values (?,?)`;
 
-    connection.query(q,[firstName,lastName], (error,result) => {
+    connection.query(q,[first_name,last_name], (error,result) => {
         if (error) {
             console.error(error);
             res.status(500).send("Internal server error");
@@ -232,7 +260,7 @@ Insert new cafe into the cafes table, and
 it automatically creates a new cafe_id to the cafe there's been added to the table.
  */
 app.post(`/new-cafe`,(req,res)=>{
-    const cafeName = req.body.cafe_name;
+    const cafe_name = req.body.cafe_name;
     const descriptions = req.body.descriptions;
     const address = req.body.address;
     const rating = req.body.rating;
@@ -240,7 +268,7 @@ app.post(`/new-cafe`,(req,res)=>{
     const q = `insert into cafes
                       (cafe_name, descriptions,address,rating) values (?,?,?,?)`;
 
-    connection.query(q,[cafeName,descriptions,address,rating], (error,result) => {
+    connection.query(q,[cafe_name,descriptions,address,rating], (error,result) => {
         if (error) {
             console.error(error);
             res.status(500).send("Internal server error");
@@ -259,9 +287,9 @@ where it inputs name and check if the person is a user
 and if not it creates a new user.
  */
 app.post(`/new-favorite`,(req,res)=>{
-    const cafeName = req.body.favorite_cafe_name;
-    const firstName = req.body.first_name;
-    const lastName = req.body.last_name;
+    const cafe_name = req.body.favorite_cafe_name;
+    const first_name = req.body.first_name;
+    const last_name = req.body.last_name;
 
     const insertFavoriteQ = `insert into favorites
                                     (cafe_id,favorite_cafe_name,users_id,first_name,last_name) 
@@ -274,7 +302,7 @@ app.post(`/new-favorite`,(req,res)=>{
                                     )`;
 
 
-    connection.query(insertFavoriteQ, [cafeName,cafeName,firstName,lastName,firstName,lastName], (error,result) => {
+    connection.query(insertFavoriteQ, [cafe_name,cafe_name,first_name,last_name,first_name,last_name], (error,result) => {
         if (error) {
             console.error("Error inserting into favorites:", error);
             res.status(500).send("Internal server error");
@@ -286,7 +314,7 @@ app.post(`/new-favorite`,(req,res)=>{
                                     where first_name = ? and last_name = ?
         `;
 
-        connection.query(checkUserQ,[firstName,lastName], (error,userResult) => {
+        connection.query(checkUserQ,[first_name,last_name], (error,userResult) => {
            if (error) {
                console.error(error);
                res.status(500).send("Internal server error");
@@ -297,7 +325,7 @@ app.post(`/new-favorite`,(req,res)=>{
                                             (first_name,last_name) 
                                             values (?,?)
                `;
-                connection.query(createUserQ,[firstName,lastName], (error,createUserResult) => {
+                connection.query(createUserQ,[first_name,last_name], (error,createUserResult) => {
                     if (error) {
                         console.error(error);
                         res.status(500).send("Internal server error");
