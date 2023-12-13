@@ -181,16 +181,16 @@ function fetchCafeDataAndDisplayInTheBox () {
                 pTagAddress.textContent = cafe.address;
                 pTagAddress.id = 'pTagAddress' + (index + 1);
 
-                const submitbtn = document.createElement('button');
+                /*const submitbtn = document.createElement('button');
                 submitbtn.id = 'submitbtn' + (index + 1);
-                submitbtn.textContent = 'Submit';
+                submitbtn.textContent = 'Submit';*/
 
                 cafeBox.appendChild(checkbox);
                 cafeBox.appendChild(labelForCheckbox);
                 cafeBox.appendChild(pTagCafeName);
                 cafeBox.appendChild(pTagDescription);
                 cafeBox.appendChild(pTagAddress);
-                cafeBox.appendChild(submitbtn);
+                //cafeBox.appendChild(submitbtn);
                 cafeSection.appendChild(cafeBox);
             });
         })
