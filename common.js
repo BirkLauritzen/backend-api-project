@@ -1,13 +1,13 @@
-const wifiradio = document.querySelector('#wifi-input').value;
-const kbhKRadio = document.querySelector('#københavn-k').value;
-const kbhVRadio = document.querySelector('#københavn-v').value;
-const kbhSRadio = document.querySelector('#københavn-s').value;
-const kbhSVRadio = document.querySelector('#københavn-sv').value;
-const kbhNRadio = document.querySelector('#københavn-n').value;
-const kbhNVRadio = document.querySelector('#københavn-nv').value;
-const kbhØRadio = document.querySelector('#københavn-ø').value;
-const frederiksbjergRadio = document.querySelector('#frederiksberg').value;
-const frederiksbjergCRadio = document.querySelector('#frederiksberg-c').value;
+const wifiradio = document.querySelector('#wifi-input');
+const kbhKRadio = document.querySelector('#københavn-k');
+const kbhVRadio = document.querySelector('#københavn-v');
+const kbhSRadio = document.querySelector('#københavn-s');
+const kbhSVRadio = document.querySelector('#københavn-sv');
+const kbhNRadio = document.querySelector('#københavn-n');
+const kbhNVRadio = document.querySelector('#københavn-nv');
+const kbhØRadio = document.querySelector('#københavn-ø');
+const frederiksbjergRadio = document.querySelector('#frederiksberg');
+const frederiksbjergCRadio = document.querySelector('#frederiksberg-c');
 
 function fetchCafesAndDisplay () {
     console.log("Fetching cafes");
@@ -19,6 +19,7 @@ function fetchCafesAndDisplay () {
         .then(cafes => {
             console.log("Cafes",cafes);
             const cafeContainer = document.querySelector('#cafe');
+            cafeContainer.innerHTML = '';
 
             const ulCafes = document.createElement('ul');
             ulCafes.id = 'ul-cafe';
