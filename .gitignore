@@ -1,4 +1,4 @@
 /public/.env
 /node_modules
 /.idea
-public/.env
+.env
