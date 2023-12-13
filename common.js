@@ -36,7 +36,7 @@ function fetchCafesAndDisplay () {
                     (kbhSVRadio.checked && cafe.address.includes('København SV')) ||
                     (kbhØRadio.checked && cafe.address.includes('København Ø')) ||
                     (frederiksbjergRadio.checked && cafe.address.includes('Frederiksbjerg')) ||
-                    (frederiksbjergØRadio.checked && cafe.address.includes('Frederiksbjerg C'))
+                    (frederiksbjergCRadio.checked && cafe.address.includes('Frederiksbjerg C'))
                 ) {
                     const cafeLi = document.createElement('li');
                     cafeLi.innerText = cafe.cafe_name;
@@ -48,8 +48,10 @@ function fetchCafesAndDisplay () {
             console.error("Error fetching cafes", error);
         });
 }
+document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change',fetchCafesAndDisplay);
+})
 
-document
 
 function fetchDataAndDisplayMap () {
     const map = L.map('map').setView([55.6761,12.5683],13);
