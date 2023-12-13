@@ -23,3 +23,9 @@ async function fetchUserInfo() {
 }
 
 document.addEventListener('DOMContentLoaded', fetchUserInfo);
+
+function isLoggedIn () {
+    /*
+    Vi skal have lavet en function som tjekker om brugeren er logget ind, hvis vi ikke allerede har det
+     */
+}
