@@ -161,6 +161,14 @@ function fetchCafeDataAndDisplayInTheBox () {
                 cafeBox.classList.add('cafe-box');
                 cafeBox.id = 'cafe' + (index + 1);
 
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = 'checkbox' + (index + 1);
+
+                const labelForCheckbox = document.createElement('label');
+                labelForCheckbox.setAttribute('for',checkbox.id);
+                labelForCheckbox.textContent = 'Add to favorite'
+
                 const pTagCafeName = document.createElement('p');
                 pTagCafeName.textContent = cafe.cafe_name;
                 pTagCafeName.id = 'pTagCafeName' + (index + 1);
@@ -173,9 +181,16 @@ function fetchCafeDataAndDisplayInTheBox () {
                 pTagAddress.textContent = cafe.address;
                 pTagAddress.id = 'pTagAddress' + (index + 1);
 
+                const submitbtn = document.createElement('button');
+                submitbtn.id = 'submitbtn' + (index + 1);
+                submitbtn.textContent = 'Submit';
+
+                cafeBox.appendChild(checkbox);
+                cafeBox.appendChild(labelForCheckbox);
                 cafeBox.appendChild(pTagCafeName);
                 cafeBox.appendChild(pTagDescription);
                 cafeBox.appendChild(pTagAddress);
+                cafeBox.appendChild(submitbtn);
                 cafeSection.appendChild(cafeBox);
             });
         })
