@@ -26,8 +26,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(expressSession({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: true
-}))
+    saveUninitialized: true,
+    cookie: {
+        sameSite: 'lax'
+    }
+}));
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -107,31 +110,31 @@ app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
     // SQL query to get user by username
-    const query = 'SELECT hashed_password FROM users WHERE username = ?';
+    const query = 'SELECT users_id, hashed_password FROM users WHERE username = ?';
     connection.query(query, [username], (error, users) => {
         if (error) {
             console.error(error);
-            res.status(500).send('Internal server error');
-        } else if (users.length > 0) {
-            const hashedPassword = users[0].hashed_password;
+            return res.status(500).json({ success: false, message: 'Internal server error' });
+        }
 
-            bcrypt.compare(password, hashedPassword, function(err, result) {
+        if (users.length > 0) {
+            const user = users[0];
+            bcrypt.compare(password, user.hashed_password, function(err, result) {
                 if (result) {
                     console.log('User authenticated successfully');
 
-                    req.session.user = {
-                        username: username,
-                    };
+                    // Set user information in the session
+                    req.session.user = { id: user.users_id, username: username };
 
-                    // Redirect to the index page after successful login
-                    res.redirect('/overview');
+                    // Return a JSON response
+                    res.json({ success: true, message: 'Authentication successful', userId: user.users_id });
                 } else {
                     console.log('Authentication failed');
-                    res.status(401).send('Authentication failed');
+                    res.status(401).json({ success: false, message: 'Authentication failed' });
                 }
             });
         } else {
-            res.status(404).send('User not found');
+            res.status(404).json({ success: false, message: 'User not found' });
         }
     });
 });
@@ -199,28 +202,24 @@ app.get('/rating', (req,res)=> {
     });
 });
 
-app.get('/api/user-info', (req, res) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+app.get('/api/user-info/:userId', (req, res) => {
+    const userId = req.params.userId;
 
-    if (token == null) return res.sendStatus(401);
+    const query = 'SELECT * FROM users WHERE users_id = ?';
+    connection.query(query, [userId], (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).send('Internal server error');
+        }
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403);
-
-        const query = 'SELECT * FROM users WHERE username = ?';
-        connection.query(query, [user.username], (error, users) => {
-            if (error) {
-                console.error(error);
-                res.status(500).send('Internal server error');
-            } else if (users.length > 0) {
-                res.json(users[0]);
-            } else {
-                res.status(404).send('User not found');
-            }
-        });
+        if (results.length > 0) {
+            res.json(results[0]);
+        } else {
+            res.status(404).send('User not found');
+        }
     });
 });
+
 
 /*
 app.get /user
@@ -302,6 +301,7 @@ It adds new favorite cafes,
 where it inputs name and check if the person is a user
 and if not it creates a new user.
  */
+/*
 app.post('/new-favorite', isLoggedIn, (req, res) => {
     if (req.session.user) {
         const cafe_name = req.body.favorite_cafe_name;
@@ -368,6 +368,7 @@ app.post('/new-favorite', isLoggedIn, (req, res) => {
         res.status(401).send("Unauthorized");
     }
 });
+*/
 
 
 
