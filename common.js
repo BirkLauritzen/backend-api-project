@@ -11,6 +11,15 @@ const frederiksbjergCRadio = document.querySelector('#frederiksberg-c');
 
 function fetchCafesAndDisplay () {
     console.log("Fetching cafes");
+
+    const cafeContainer = document.querySelector('#cafe');
+    cafeContainer.innerHTML = '';
+
+    const ulCafes = document.createElement('ul');
+    ulCafes.id = 'ul-cafe';
+
+    cafeContainer.appendChild(ulCafes);
+
     fetch('http://localhost:3000/cafe')
         .then(response => {
             console.log("Response status",response.status);
@@ -18,16 +27,9 @@ function fetchCafesAndDisplay () {
         })
         .then(cafes => {
             console.log("Cafes",cafes);
-            const cafeContainer = document.querySelector('#cafe');
-            cafeContainer.innerHTML = '';
-
-            const ulCafes = document.createElement('ul');
-            ulCafes.id = 'ul-cafe';
-
-            cafeContainer.appendChild(ulCafes);
 
             cafes.forEach(cafe => {
-                if (
+                const shouldDisplayCafe =
                     (wifiradio.checked && cafe.has_wifi) ||
                     (kbhKRadio.checked && cafe.address.includes('København K')) ||
                     (kbhNRadio.checked && cafe.address.includes('København N')) ||
@@ -36,9 +38,11 @@ function fetchCafesAndDisplay () {
                     (kbhSRadio.checked && cafe.address.includes('København S')) ||
                     (kbhSVRadio.checked && cafe.address.includes('København SV')) ||
                     (kbhØRadio.checked && cafe.address.includes('København Ø')) ||
-                    (frederiksbjergRadio.checked && cafe.address.includes('Frederiksbjerg')) ||
-                    (frederiksbjergCRadio.checked && cafe.address.includes('Frederiksbjerg C'))
-                ) {
+                    (frederiksbjergRadio.checked && cafe.address.includes('Frederiksberg'));
+
+                console.log("cafe:", cafe.cafe_name, "Should display:", shouldDisplayCafe);
+
+                if (shouldDisplayCafe) {
                     const cafeLi = document.createElement('li');
                     cafeLi.innerText = cafe.cafe_name;
                     ulCafes.appendChild(cafeLi);
@@ -49,7 +53,7 @@ function fetchCafesAndDisplay () {
             console.error("Error fetching cafes", error);
         });
 }
-document.querySelectorAll('input[type="radio"]').forEach(radio => {
+document.querySelectorAll('input[type="checkbox"]').forEach(radio => {
     radio.addEventListener('change',fetchCafesAndDisplay);
 })
 
