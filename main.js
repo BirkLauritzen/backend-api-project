@@ -119,7 +119,9 @@ app.post('/login', (req, res) => {
                 if (result) {
                     console.log('User authenticated successfully');
 
-                    req.session.user = username;
+                    req.session.user = {
+                        username: username,
+                    };
 
                     // Redirect to the index page after successful login
                     res.redirect('/overview');
