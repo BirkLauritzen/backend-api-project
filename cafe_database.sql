@@ -78,6 +78,12 @@ SET address = CASE
                   ELSE address
     END;
 
+update cafes
+set address = case
+when cafe_id = 5 then 'Gl. Kongevej 108, 1850 Frederiksberg C'
+else address
+END;
+
 create table favorites
 (
     favorite_id        int auto_increment

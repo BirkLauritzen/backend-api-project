@@ -1,3 +1,14 @@
+const wifiradio = document.querySelector('#wifi-input').value;
+const kbhKRadio = document.querySelector('#københavn-k').value;
+const kbhVRadio = document.querySelector('#københavn-v').value;
+const kbhSRadio = document.querySelector('#københavn-s').value;
+const kbhSVRadio = document.querySelector('#københavn-sv').value;
+const kbhNRadio = document.querySelector('#københavn-n').value;
+const kbhNVRadio = document.querySelector('#københavn-nv').value;
+const kbhØRadio = document.querySelector('#københavn-ø').value;
+const frederiksbjergRadio = document.querySelector('#frederiksberg').value;
+const frederiksbjergCRadio = document.querySelector('#frederiksberg-c').value;
+
 function fetchCafesAndDisplay () {
     console.log("Fetching cafes");
     fetch('http://localhost:3000/cafe')
@@ -15,15 +26,30 @@ function fetchCafesAndDisplay () {
             cafeContainer.appendChild(ulCafes);
 
             cafes.forEach(cafe => {
-                const cafeLi = document.createElement('li');
-                cafeLi.innerText = cafe.cafe_name;
-                ulCafes.appendChild(cafeLi);
+                if (
+                    (wifiradio.checked && cafe.has_wifi) ||
+                    (kbhKRadio.checked && cafe.address.includes('København K')) ||
+                    (kbhNRadio.checked && cafe.address.includes('København N')) ||
+                    (kbhNVRadio.checked && cafe.address.includes('København NV')) ||
+                    (kbhVRadio.checked && cafe.address.includes('København V')) ||
+                    (kbhSRadio.checked && cafe.address.includes('København S')) ||
+                    (kbhSVRadio.checked && cafe.address.includes('København SV')) ||
+                    (kbhØRadio.checked && cafe.address.includes('København Ø')) ||
+                    (frederiksbjergRadio.checked && cafe.address.includes('Frederiksbjerg')) ||
+                    (frederiksbjergØRadio.checked && cafe.address.includes('Frederiksbjerg C'))
+                ) {
+                    const cafeLi = document.createElement('li');
+                    cafeLi.innerText = cafe.cafe_name;
+                    ulCafes.appendChild(cafeLi);
+                }
             });
         })
         .catch(error => {
             console.error("Error fetching cafes", error);
         });
 }
+
+document
 
 function fetchDataAndDisplayMap () {
     const map = L.map('map').setView([55.6761,12.5683],13);
