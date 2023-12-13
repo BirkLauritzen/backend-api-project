@@ -46,7 +46,7 @@ create table users
 
 update cafes
 set address = case
-when cafe_id = 5 then 'Gl. Kongevej 108, 1850 Frederiksberg C'
+when cafe_id = 5 then 'Gl. Kongevej 108, 1850 Frederiksberg'
 else address
 END;
 
