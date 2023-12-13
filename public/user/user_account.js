@@ -24,8 +24,14 @@ async function fetchUserInfo() {
 
 document.addEventListener('DOMContentLoaded', fetchUserInfo);
 
-function isLoggedIn () {
-    /*
-    Vi skal have lavet en function som tjekker om brugeren er logget ind, hvis vi ikke allerede har det
-     */
+function isLoggedIn (req,res,next) {
+    if (req.session.user) {
+        next();
+    } else {
+        res.status(401).send("Unauthorized");
+    }
+}
+
+function updateUserFavoriteList () {
+
 }

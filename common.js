@@ -198,3 +198,35 @@ function fetchCafeDataAndDisplayInTheBox () {
             console.error('Error fetching the cafe data', error);
         })
 }
+
+const submitbtn = document.querySelector('#submit-btn');
+
+submitbtn.addEventListener('click', function () {
+  const selectedCafeName = Array.from(document.querySelectorAll('[id^="checkbox"]:checked'))
+      .map(checkbox => checkbox.cafes.cafe_name);
+
+  if (selectedCafeName > 0) {
+      fetch('http://localhost:3000:/new-favorite', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ selectedCafeName }),
+      })
+          .then(response => {
+              console.log('Response status', response);
+              return response.json();
+          })
+          .then(data => {
+              console.log(data);
+            //updateUserFavoriteList();
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          })
+  } else {
+      console.log('No selected cafes');
+      alert('No selected cafes');
+  }
+
+});
