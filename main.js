@@ -300,59 +300,72 @@ It adds new favorite cafes,
 where it inputs name and check if the person is a user
 and if not it creates a new user.
  */
-app.post(`/new-favorite`,(req,res)=>{
-    const cafe_name = req.body.favorite_cafe_name;
-    const first_name = req.body.first_name;
-    const last_name = req.body.last_name;
+app.post('/new-favorite', (req, res) => {
+    if (req.session.user) {
+        const cafe_name = req.body.favorite_cafe_name;
+        const first_name = req.body.first_name;
+        const last_name = req.body.last_name;
 
-    const insertFavoriteQ = `insert into favorites
-                                    (cafe_id,favorite_cafe_name,users_id,first_name,last_name) 
-                                    values(
-                                    (select cafe_id from cafes where cafe_name = ?), 
-                                    ?,
-                                    (select users_id from users where users.first_name = ? and users.last_name = ?),
-                                    ?,
-                                    ? 
-                                    )`;
+        const insertFavoriteQ = `INSERT INTO favorites
+            (cafe_id, favorite_cafe_name, users_id, first_name, last_name) 
+            VALUES (
+                (SELECT cafe_id FROM cafes WHERE cafe_name = ?), 
+                ?, 
+                (SELECT users_id FROM users WHERE users.first_name = ? AND users.last_name = ?),
+                ?, 
+                ?
+            )`;
 
+        connection.query(insertFavoriteQ, [cafe_name, cafe_name, first_name, last_name, first_name, last_name], (error, result) => {
+            if (error) {
+                console.error("Error inserting into favorites:", error);
+                res.status(500).send("Internal server error");
+                return;
+            }
 
-    connection.query(insertFavoriteQ, [cafe_name,cafe_name,first_name,last_name,first_name,last_name], (error,result) => {
-        if (error) {
-            console.error("Error inserting into favorites:", error);
-            res.status(500).send("Internal server error");
-            return;
-        }
+            const checkUserQ = `SELECT users_id
+                FROM users 
+                WHERE first_name = ? AND last_name = ?
+            `;
 
-        const checkUserQ = `select users_id
-                                    from users 
-                                    where first_name = ? and last_name = ?
-        `;
+            connection.query(checkUserQ, [first_name, last_name], (error, userResult) => {
+                if (error) {
+                    console.error(error);
+                    res.status(500).send("Internal server error");
+                }
 
-        connection.query(checkUserQ,[first_name,last_name], (error,userResult) => {
-           if (error) {
-               console.error(error);
-               res.status(500).send("Internal server error");
-           }
+                if (userResult.length === 0) {
+                    const createUserQ = `INSERT INTO users 
+                        (first_name, last_name) 
+                        VALUES (?, ?)
+                    `;
 
-           if (userResult.length === 0) {
-               const createUserQ = `Insert into users 
-                                            (first_name,last_name) 
-                                            values (?,?)
-               `;
-                connection.query(createUserQ,[first_name,last_name], (error,createUserResult) => {
-                    if (error) {
-                        console.error(error);
-                        res.status(500).send("Internal server error");
-                        return;
-                    }
+                    connection.query(createUserQ, [first_name, last_name], (error, createUserResult) => {
+                        if (error) {
+                            console.error(error);
+                            res.status(500).send("Internal server error");
+                            return;
+                        }
 
-                    console.log("New user created:",createUserResult.insertId);
-                    res.send("New favorite cafe added and new user created");
-               });
-           } else {
-               res.send("New favorite cafe added");
-           }
+                        // Set the user information in the session upon successful user creation
+                        req.session.user = {
+                            username: createUserResult.insertId,
+                            first_name: first_name,
+                            last_name: last_name
+                        };
+
+                        console.log("New user created:", createUserResult.insertId);
+                        res.send("New favorite cafe added, and new user created");
+                    });
+                } else {
+                    res.send("New favorite cafe added");
+                }
+            });
         });
-    });
+    } else {
+        res.status(401).send("Unauthorized");
+    }
 });
+
+
 
