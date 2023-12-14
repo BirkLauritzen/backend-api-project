@@ -198,6 +198,12 @@ function fetchCafeDataAndDisplayInTheBox () {
         })
 }
 
+
+function isLoggedIn () {
+    const isUserLoggedIn = window.sessionStorage.getItem('user');
+    return Boolean(isUserLoggedIn);
+}
+
 const submitbtn = document.querySelector('#submit-btn');
 
 submitbtn.addEventListener('click', function () {

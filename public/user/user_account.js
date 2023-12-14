@@ -25,13 +25,6 @@ async function fetchUserInfo() {
 
 document.addEventListener('DOMContentLoaded', fetchUserInfo);
 
-
-
-function isLoggedIn () {
-    const isUserLoggedIn = window.sessionStorage.getItem('user');
-    return Boolean(isUserLoggedIn);
-}
-
 function updateUserFavoriteList (data) {
     const ulFavoriteList = document.querySelector('#cafe-list');
     ulFavoriteList.innerHTML = '';
