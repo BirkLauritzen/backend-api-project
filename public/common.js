@@ -204,14 +204,14 @@ function fetchCafeDataAndDisplayInTheBox () {
     const isUserLoggedIn = window.sessionStorage.getItem('user');
     return Boolean(isUserLoggedIn);
 }*/
+/* if (!isLoggedIn()) {
+        alert('Please log in to add a favorite cafe');
+        return;
+    }*/
 
 const submitbtn = document.querySelector('#submit-btn');
 
 submitbtn.addEventListener('click', function () {
-   /* if (!isLoggedIn()) {
-        alert('Please log in to add a favorite cafe');
-        return;
-    }*/
     const checkboxIdPrefix = 'checkbox';
     const cafeNameIdPrefix = 'pTagCafeName';
 
@@ -249,9 +249,11 @@ submitbtn.addEventListener('click', function () {
             })
             .catch(error => {
                 console.error('Error:', error);
-            })
+                alert('An error occurred. Please try again.');
+            });
     } else {
         console.log('No selected cafes');
         alert('No selected cafes');
     }
+
 });

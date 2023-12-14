@@ -305,12 +305,11 @@ and if not it creates a new user.
 
 
 app.post('/new-favorite', (req, res) => {
-    if (req.session.user) {
-        const cafe_name = req.body.favorite_cafe_name;
-        const first_name = req.session.first_name;
-        const last_name = req.session.last_name;
+    const cafe_name = req.body.favorite_cafe_name;
+    const first_name = req.session.first_name;
+    const last_name = req.session.last_name;
 
-        const insertFavoriteQ = `INSERT INTO favorites
+    const insertFavoriteQ = `INSERT INTO favorites
             (cafe_id, favorite_cafe_name, users_id, first_name, last_name) 
             VALUES (
                 (SELECT cafe_id FROM cafes WHERE cafe_name = ?), 
@@ -320,53 +319,44 @@ app.post('/new-favorite', (req, res) => {
                 ?
             )`;
 
-        connection.query(insertFavoriteQ, [cafe_name, cafe_name, first_name, last_name, first_name, last_name], (error, result) => {
-            if (error) {
-                console.error("Error inserting into favorites:", error);
-                res.status(500).send("Internal server error");
-                return;
-            }
+    connection.query(insertFavoriteQ, [cafe_name, cafe_name, first_name, last_name, first_name, last_name], (error, result) => {
+        if (error) {
+            console.error("Error inserting into favorites:", error);
+            res.status(500).send("Internal server error");
+            return;
+        }
 
-            const checkUserQ = `SELECT users_id
+        const checkUserQ = `SELECT users_id
                 FROM users 
                 WHERE first_name = ? AND last_name = ?
             `;
 
-            connection.query(checkUserQ, [first_name, last_name], (error, userResult) => {
-                if (error) {
-                    console.error(error);
-                    res.status(500).send("Internal server error");
-                }
+        connection.query(checkUserQ, [first_name, last_name], (error, userResult) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send("Internal server error");
+            }
 
-                if (userResult.length === 0) {
-                    const createUserQ = `INSERT INTO users 
+            if (userResult.length === 0) {
+                const createUserQ = `INSERT INTO users 
                         (first_name, last_name) 
                         VALUES (?, ?)
                     `;
 
-                    connection.query(createUserQ, [first_name, last_name], (error, createUserResult) => {
-                        if (error) {
-                            console.error(error);
-                            res.status(500).send("Internal server error");
-                            return;
-                        }
+                connection.query(createUserQ, [first_name, last_name], (error, createUserResult) => {
+                    if (error) {
+                        console.error(error);
+                        res.status(500).send("Internal server error");
+                        return;
+                    }
 
-                        // Set the user information in the session upon successful user creation
-                        req.session.user = {
-                            username: createUserResult.insertId,
-                            first_name: first_name,
-                            last_name: last_name
-                        };
-
-                        console.log("New user created:", createUserResult.insertId);
-                        res.send("New favorite cafe added, and new user created");
-                    });
-                } else {
-                    res.send("New favorite cafe added");
-                }
-            });
+                    console.log("New user created:", createUserResult.insertId);
+                    res.send("New favorite cafe added, and new user created");
+                });
+            } else {
+                res.send("New favorite cafe added");
+            }
         });
-    } else {
-        res.status(401).send("Unauthorized");
-    }
+    });
+
 });
