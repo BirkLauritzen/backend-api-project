@@ -326,9 +326,14 @@ app.post('/new-favorite', (req, res) => {
             res.status(500).send("Internal server error");
             return;
         }
+        //res.send("New favorite cafe added");
+        res.json({});
+    });
 
-        const checkUserQ = `SELECT users_id
-                FROM users 
+});
+
+/* const checkUserQ = `SELECT users_id
+                FROM users
                 WHERE first_name = ? AND last_name = ?
             `;
 
@@ -339,8 +344,8 @@ app.post('/new-favorite', (req, res) => {
             }
 
             if (userResult.length === 0) {
-                const createUserQ = `INSERT INTO users 
-                        (first_name, last_name) 
+                const createUserQ = `INSERT INTO users
+                        (first_name, last_name)
                         VALUES (?, ?)
                     `;
 
@@ -357,7 +362,4 @@ app.post('/new-favorite', (req, res) => {
             } else {
                 res.send("New favorite cafe added");
             }
-        });
-    });
-
-});
+        });*/
