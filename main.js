@@ -304,32 +304,28 @@ where it inputs name and check if the person is a user
 and if not it creates a new user.
  */
 
-
 app.post('/new-favorite', (req, res) => {
-    const cafe_name = req.body.favorite_cafe_name;
-    const first_name = req.body.first_name;
-    const last_name = req.body.last_name;
+    const cafeName = req.body.favorite_cafe_name;
+    const firstName = req.body.first_name;
+    const lastName = req.body.last_name;
 
-    const insertFavoriteQ = `INSERT INTO favorites
-            (cafe_id, favorite_cafe_name, users_id, first_name, last_name) 
-            VALUES (
-                (SELECT cafe_id FROM cafes WHERE cafe_name = ?), 
-                ?, 
-                (SELECT users_id FROM users WHERE users.first_name = ? AND users.last_name = ?),
-                ?, 
-                ?
-            )`;
+    // This query inserts a new favorite cafe associated with a user's ID
+    const insertFavoriteQuery = `
+        INSERT INTO favorites (cafe_id, favorite_cafe_name, users_id) 
+        VALUES (
+            (SELECT cafe_id FROM cafes WHERE cafe_name = ?), 
+            ?,
+            (SELECT users_id FROM users WHERE first_name = ? AND last_name = ?)
+        )`;
 
-    connection.query(insertFavoriteQ, [cafe_name, cafe_name, first_name, last_name, first_name, last_name], (error, result) => {
+    connection.query(insertFavoriteQuery, [cafeName, cafeName, firstName, lastName], (error, result) => {
         if (error) {
             console.error("Error inserting into favorites:", error);
             res.status(500).send("Internal server error");
             return;
         }
-        //res.send("New favorite cafe added");
-        res.json({});
+        res.send("New favorite cafe added successfully");
     });
-
 });
 
 /* const checkUserQ = `SELECT users_id
