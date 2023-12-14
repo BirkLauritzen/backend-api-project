@@ -302,8 +302,8 @@ where it inputs name and check if the person is a user
 and if not it creates a new user.
  */
 
-/*
-app.post('/new-favorite', isLoggedIn, (req, res) => {
+
+app.post('/new-favorite', (req, res) => {
     if (req.session.user) {
         const cafe_name = req.body.favorite_cafe_name;
         const first_name = req.body.first_name;
@@ -369,7 +369,7 @@ app.post('/new-favorite', isLoggedIn, (req, res) => {
         res.status(401).send("Unauthorized");
     }
 });
-*/
+
 
 
 
