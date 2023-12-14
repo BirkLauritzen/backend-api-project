@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', fetchUserInfo);
 
 
 
-function isLoggedIn (req,res,next) {
+/*function isLoggedIn (req,res,next) {
     if (req.session.user) {
         next();
     } else {
         res.status(401).send("Unauthorized");
     }
-}
+}*/
 
 function updateUserFavoriteList () {
 

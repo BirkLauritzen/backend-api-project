@@ -7,7 +7,6 @@ const kbhNRadio = document.querySelector('#københavn-n');
 const kbhNVRadio = document.querySelector('#københavn-nv');
 const kbhØRadio = document.querySelector('#københavn-ø');
 const frederiksbjergRadio = document.querySelector('#frederiksberg');
-const frederiksbjergCRadio = document.querySelector('#frederiksberg-c');
 
 function fetchCafesAndDisplay () {
     console.log("Fetching cafes");

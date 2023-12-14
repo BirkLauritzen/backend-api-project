@@ -306,8 +306,8 @@ and if not it creates a new user.
 app.post('/new-favorite', (req, res) => {
     if (req.session.user) {
         const cafe_name = req.body.favorite_cafe_name;
-        const first_name = req.body.first_name;
-        const last_name = req.body.last_name;
+        const first_name = req.session.first_name;
+        const last_name = req.session.last_name;
 
         const insertFavoriteQ = `INSERT INTO favorites
             (cafe_id, favorite_cafe_name, users_id, first_name, last_name) 
