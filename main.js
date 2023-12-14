@@ -369,7 +369,3 @@ app.post('/new-favorite', (req, res) => {
         res.status(401).send("Unauthorized");
     }
 });
-
-
-
-
