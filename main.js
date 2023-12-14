@@ -54,6 +54,7 @@ app.listen(port,()=>{
     console.log(`Application is now running on port ${port}`);
 });
 
+// http://localhost:3000/login/
 
 const saltRounds = 10;
 
