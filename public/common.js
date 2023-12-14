@@ -200,18 +200,18 @@ function fetchCafeDataAndDisplayInTheBox () {
 }
 
 
-function isLoggedIn () {
+/*function isLoggedIn () {
     const isUserLoggedIn = window.sessionStorage.getItem('user');
     return Boolean(isUserLoggedIn);
-}
+}*/
 
 const submitbtn = document.querySelector('#submit-btn');
 
 submitbtn.addEventListener('click', function () {
-    if (!isLoggedIn()) {
+   /* if (!isLoggedIn()) {
         alert('Please log in to add a favorite cafe');
         return;
-    }
+    }*/
     const checkboxIdPrefix = 'checkbox';
     const cafeNameIdPrefix = 'pTagCafeName';
 
