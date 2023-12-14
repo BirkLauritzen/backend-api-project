@@ -39,7 +39,7 @@ function updateUserFavoriteList (data) {
     data.forEach(item => {
         const liElement = document.createElement('li');
         liElement.textContent = item.name;
-        ulFavoriteList.appendChild('li');
+        ulFavoriteList.appendChild(liElement);
     });
 
 }
