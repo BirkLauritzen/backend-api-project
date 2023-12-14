@@ -44,34 +44,6 @@ create table users
 )
     engine = InnoDB;
 
-update cafes
-set address = case
-when cafe_id = 5 then 'Gl. Kongevej 108, 1850 Frederiksberg'
-else address
-END;
-
-UPDATE cafes
-SET address = CASE
-                  WHEN cafe_name = 'Café Europa 1989' THEN 'Amagertorv 1, 1160 København K'
-                  WHEN cafe_name = 'Café Victor' THEN 'Ny Østergade 8, 1101 København K'
-                  WHEN cafe_name = 'Democratic Coffee' THEN 'Krystalgade 15, 1172 København K'
-                  WHEN cafe_name = 'Absalon' THEN 'Sønder Boulevard 73, 1720 København V'
-                  WHEN cafe_name = 'Henckell' THEN 'Gl. Kongevej 108, 1850 Frederiksberg'
-                  WHEN cafe_name = 'Paludan Bog & Café' THEN 'Fiolstræde 10, 1171 København K'
-                  WHEN cafe_name = 'Cafe Bjerget' THEN 'Bispebjerg Torv 8, 2400 København NV'
-                  WHEN cafe_name = 'Café Retro' THEN 'Knabrostræde 26, 1210 København K'
-                  WHEN cafe_name = 'Kaffeplantagen' THEN 'Skt. Hans Torv 3, 2200 København N'
-                  WHEN cafe_name = 'Café Dyrehaven' THEN 'Sønder Boulevard 72, 1720 København V'
-                  WHEN cafe_name = 'The Living Room' THEN 'Larsbjørnsstræde 17, 1454 København K'
-                  WHEN cafe_name = 'Café Sommersko' THEN 'Kronprinsensgade 6, 1114 København K'
-                  WHEN cafe_name = 'Café Katz' THEN 'Nørrebrogade 88, 2200 København N'
-                  WHEN cafe_name = 'Café Norden' THEN 'Østergade 61, 1100 København K'
-                  WHEN cafe_name = 'Studenterhuset' THEN 'Købmagergade 52, 1150 København K'
-                  WHEN cafe_name = 'Riccos' THEN 'Istedgade 119, 1650 København V'
-                  ELSE address
-    END;
-
-
 create table favorites
 (
     favorite_id        int auto_increment
@@ -85,9 +57,6 @@ create table favorites
         foreign key (users_id) references users (users_id)
 )
     engine = InnoDB;
-
-create index cafe_id
-    on favorites (cafe_id);
 
 CREATE TABLE opening_hours (
                                id INT auto_increment PRIMARY KEY,
@@ -296,3 +265,33 @@ VALUES
     (16, 'Friday', '08:30:00', '17:30:00'),
     (16,'Saturday','07:30:00','15:00:00'),
     (16,'Sunday','07:30:00','15:00:00');
+
+create index cafe_id
+    on favorites (cafe_id);
+
+update cafes
+set address = case
+                  when cafe_id = 5 then 'Gl. Kongevej 108, 1850 Frederiksberg'
+                  else address
+    END;
+
+UPDATE cafes
+SET address = CASE
+                  WHEN cafe_name = 'Café Europa 1989' THEN 'Amagertorv 1, 1160 København K'
+                  WHEN cafe_name = 'Café Victor' THEN 'Ny Østergade 8, 1101 København K'
+                  WHEN cafe_name = 'Democratic Coffee' THEN 'Krystalgade 15, 1172 København K'
+                  WHEN cafe_name = 'Absalon' THEN 'Sønder Boulevard 73, 1720 København V'
+                  WHEN cafe_name = 'Henckell' THEN 'Gl. Kongevej 108, 1850 Frederiksberg'
+                  WHEN cafe_name = 'Paludan Bog & Café' THEN 'Fiolstræde 10, 1171 København K'
+                  WHEN cafe_name = 'Cafe Bjerget' THEN 'Bispebjerg Torv 8, 2400 København NV'
+                  WHEN cafe_name = 'Café Retro' THEN 'Knabrostræde 26, 1210 København K'
+                  WHEN cafe_name = 'Kaffeplantagen' THEN 'Skt. Hans Torv 3, 2200 København N'
+                  WHEN cafe_name = 'Café Dyrehaven' THEN 'Sønder Boulevard 72, 1720 København V'
+                  WHEN cafe_name = 'The Living Room' THEN 'Larsbjørnsstræde 17, 1454 København K'
+                  WHEN cafe_name = 'Café Sommersko' THEN 'Kronprinsensgade 6, 1114 København K'
+                  WHEN cafe_name = 'Café Katz' THEN 'Nørrebrogade 88, 2200 København N'
+                  WHEN cafe_name = 'Café Norden' THEN 'Østergade 61, 1100 København K'
+                  WHEN cafe_name = 'Studenterhuset' THEN 'Købmagergade 52, 1150 København K'
+                  WHEN cafe_name = 'Riccos' THEN 'Istedgade 119, 1650 København V'
+                  ELSE address
+    END;
