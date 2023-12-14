@@ -87,7 +87,7 @@ function fetchDataAndDisplayMap () {
 
 // Get latitude and longitude from the api  https://geocode.maps.co/search?q={address}
 
-function fetchlatandlong (cafeName,cafeAddress,city,postalCode) {
+function fetchlatandlong (cafeName,cafeAddress,city,postalCode,descriptions) {
     return new Promise((resolve, reject) => {
         const apiUrl = `https://nominatim.openstreetmap.org/search?street=${encodeURIComponent(cafeAddress)}&city=${encodeURIComponent(city)}&postalcode=${encodeURIComponent(postalCode)}&format=json`
         fetch(apiUrl)
@@ -102,7 +102,8 @@ function fetchlatandlong (cafeName,cafeAddress,city,postalCode) {
                         latitude: parseFloat(lat),
                         longitude: parseFloat(lon),
                         cafe_name: cafeName,
-                        address: display_name
+                        address: display_name,
+                        description: descriptions
                     };
                 })
                 console.log("Coordinates Array", cafeDataArray);
@@ -116,8 +117,8 @@ function fetchlatandlong (cafeName,cafeAddress,city,postalCode) {
 
 }
 
-function getCoordinatesInDb (cafeName,cafeAddress,city,postalCode) {
-    fetchlatandlong(cafeName,cafeAddress,city,postalCode)
+function getCoordinatesInDb (cafeName,cafeAddress,city,postalCode,descriptions) {
+    fetchlatandlong(cafeName,cafeAddress,city,postalCode,descriptions)
         .then(data => {
             const fetchRequest = data.map(coordinates => {
                 return fetch("http://localhost:3000/new-cafe", {
@@ -199,18 +200,18 @@ function fetchCafeDataAndDisplayInTheBox () {
 }
 
 
-function isLoggedIn () {
+/*function isLoggedIn () {
     const isUserLoggedIn = window.sessionStorage.getItem('user');
     return Boolean(isUserLoggedIn);
-}
+}*/
+/* if (!isLoggedIn()) {
+        alert('Please log in to add a favorite cafe');
+        return;
+    }*/
 
 const submitbtn = document.querySelector('#submit-btn');
 
 submitbtn.addEventListener('click', function () {
-    if (!isLoggedIn()) {
-        alert('Please log in to add a favorite cafe');
-        return;
-    }
     const checkboxIdPrefix = 'checkbox';
     const cafeNameIdPrefix = 'pTagCafeName';
 
@@ -248,9 +249,11 @@ submitbtn.addEventListener('click', function () {
             })
             .catch(error => {
                 console.error('Error:', error);
-            })
+                alert('An error occurred. Please try again.');
+            });
     } else {
         console.log('No selected cafes');
         alert('No selected cafes');
     }
+
 });
