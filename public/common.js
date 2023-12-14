@@ -201,31 +201,50 @@ function fetchCafeDataAndDisplayInTheBox () {
 const submitbtn = document.querySelector('#submit-btn');
 
 submitbtn.addEventListener('click', function () {
-  const selectedCafeName = Array.from(document.querySelectorAll('[id^="checkbox"]:checked'))
-      .map(checkbox => checkbox.cafes.cafe_name);
+    if (!isLoggedIn()) {
+        alert('Please log in to add a favorite cafe');
+        return;
+    }
+    const checkboxIdPrefix = 'checkbox';
+    const cafeNameIdPrefix = 'pTagCafeName';
 
-  if (selectedCafeName > 0) {
-      fetch('http://localhost:3000:/new-favorite', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ selectedCafeName }),
-      })
-          .then(response => {
-              console.log('Response status', response);
-              return response.json();
-          })
-          .then(data => {
-              console.log(data);
-            //updateUserFavoriteList();
-          })
-          .catch(error => {
-              console.error('Error:', error);
-          })
-  } else {
-      console.log('No selected cafes');
-      alert('No selected cafes');
-  }
+    const checkboxes = document.querySelectorAll(`[id^="${checkboxIdPrefix}"]`);
 
+    const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
+    if (selectedCheckboxes.length > 0) {
+        const selectedCafeName = selectedCheckboxes.map(checkbox => {
+            const index = checkbox.id.replace(checkboxIdPrefix, '');
+            const cafeNameId = `${cafeNameIdPrefix}${index}`;
+            const cafeName = document.querySelector(cafeNameId).textContent.trim();
+
+            return {
+                id: index,
+                name: cafeName,
+            };
+        });
+
+        fetch('http://localhost:3000:/new-favorite', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({ selectedCafeName }),
+        })
+            .then(response => {
+                console.log('Response status', response);
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                updateUserFavoriteList(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            })
+    } else {
+        console.log('No selected cafes');
+        alert('No selected cafes');
+    }
 });

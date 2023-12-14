@@ -27,14 +27,19 @@ document.addEventListener('DOMContentLoaded', fetchUserInfo);
 
 
 
-/*function isLoggedIn (req,res,next) {
-    if (req.session.user) {
-        next();
-    } else {
-        res.status(401).send("Unauthorized");
-    }
-}*/
+function isLoggedIn () {
+    const isUserLoggedIn = window.sessionStorage.getItem('user');
+    return Boolean(isUserLoggedIn);
+}
 
-function updateUserFavoriteList () {
+function updateUserFavoriteList (data) {
+    const ulFavoriteList = document.querySelector('#cafe-list');
+    ulFavoriteList.innerHTML = '';
+
+    data.forEach(item => {
+        const liElement = document.createElement('li');
+        liElement.textContent = item.name;
+        ulFavoriteList.appendChild('li');
+    });
 
 }
