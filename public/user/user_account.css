@@ -15,10 +15,10 @@ header {
     max-width: 110px;
 }
 
-.account-login-reg a {
-    margin-left: 10px;
-    text-decoration: none;
-    color: #333;
+.account-logout {
+    position: absolute;
+    top: 50px;
+    right: 0;
 }
 
 nav ul {
