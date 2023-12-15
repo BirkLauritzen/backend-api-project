@@ -286,7 +286,7 @@ app.post(`/new-cafe`,(req,res)=>{
     const q = `insert into cafes
                       (cafe_name, descriptions,address,rating,latitude,longitude) values (?,?,?,?,?,?)`;
 
-    connection.query(q,[cafe_name,descriptions,address,rating,latitude,latitude], (error,result) => {
+    connection.query(q,[cafe_name,descriptions,address,rating,latitude,longitude], (error,result) => {
         if (error) {
             console.error(error);
             res.status(500).send("Internal server error");
