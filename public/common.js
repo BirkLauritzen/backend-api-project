@@ -174,6 +174,7 @@ function fetchCafeDataAndDisplayInTheBox () {
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.id = 'checkbox' + (index + 1);
+                checkbox.classList.add('favorite-checkbox');
 
                 const labelForCheckbox = document.createElement('label');
                 labelForCheckbox.setAttribute('for',checkbox.id);
