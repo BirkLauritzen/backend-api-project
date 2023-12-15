@@ -141,6 +141,7 @@ nav ul li a:hover {
     display: flex;
     justify-content: center;
     font-size: 40px;
+    margin-top: 20px;
     margin-bottom: 20px;
     font-weight: 400;
 }
