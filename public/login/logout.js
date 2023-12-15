@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clear any stored data like sessionId or userInfo
             localStorage.removeItem('sessionId');
             localStorage.removeItem('userInfo');
+            localStorage.removeItem(`userFavorites-${userId}`);
 
             // Redirect to the login page
             window.location.href = '/index.html';
