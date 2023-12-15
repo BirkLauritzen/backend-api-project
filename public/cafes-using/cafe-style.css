@@ -19,11 +19,16 @@ header {
 .logo img {
     max-width: 110px;
 }
-
+/*Log out btn*/
 .account-logout {
     position: absolute;
-    top: 50px;
-    right: 0;
+    top: 30px;
+    right: 5px;
+}
+
+#logoutButton {
+    padding: 5px 20px;
+    font-size: 15px;
 }
 
 /* Nav Bar */
