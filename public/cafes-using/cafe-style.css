@@ -96,14 +96,15 @@ nav ul li a:hover {
 /*#f0f0f0*/
 .cafe-box {
     width: 150px;
-    margin-bottom: 50px;
-    padding: 150px;
+    margin-bottom: 40px;
+    padding: 145px;
     background-color: #EDE0D4;
     transition: transform 0.3s ease-in-out;
     font-size: 20px;
     border: 3px solid black;
     border-radius: 10px;
 }
+
 .cafe-name,
 .description,
 .address,
@@ -113,8 +114,31 @@ nav ul li a:hover {
 }
 
 .favorite-checkbox {
-    font-size: 35px;
     margin-bottom: 30px;
+}
+
+.favorite-checkbox-label {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.cafe-name {
+    font-size: 30px;
+}
+
+.description {
+    font-size: 25px;
+}
+
+.address {
+    font-size: 25px;
+    font-weight: 400;
+    margin-top: 50px;
+}
+
+.add-cafe-content p {
+    font-size: 30px;
+    font-weight: 400;
 }
 
 .cafe-box:hover {
