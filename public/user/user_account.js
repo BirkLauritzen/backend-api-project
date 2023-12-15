@@ -25,14 +25,54 @@ async function fetchUserInfo() {
 
 document.addEventListener('DOMContentLoaded', fetchUserInfo);
 
-function updateUserFavoriteList (data) {
+function updateUserFavoriteList(favorites) {
     const ulFavoriteList = document.querySelector('#cafe-list');
     ulFavoriteList.innerHTML = '';
 
-    data.forEach(item => {
+    favorites.forEach(favorite => {
         const liElement = document.createElement('li');
-        liElement.textContent = item.name;
+        liElement.textContent = `${favorite.cafe_name} - Rating: ${favorite.rating}`;
         ulFavoriteList.appendChild(liElement);
     });
+}
 
+// Fetch and display user's favorite cafes
+function fetchAndDisplayUserFavorites(userId) {
+    fetch(`/favorites/${userId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(favorites => {
+            localStorage.setItem(`userFavorites-${userId}`, JSON.stringify(favorites));
+            displayUserFavorites(favorites);
+        })
+        .catch(error => {
+            console.error('Error fetching favorites:', error);
+        });
+}
+
+// Display user's favorite cafes
+function displayUserFavorites(favorites) {
+    const ulFavoriteList = document.querySelector('#cafe-list');
+    ulFavoriteList.innerHTML = '';
+
+    favorites.forEach(cafe => {
+        const liElement = document.createElement('li');
+        liElement.textContent = `${cafe.cafe_name} - ${cafe.address} - Rating: ${cafe.rating}`;
+        ulFavoriteList.appendChild(liElement);
+    });
+}
+
+// Call this function when the user account page loads
+const userId = localStorage.getItem('sessionId');
+if (userId) {
+    const storedFavorites = localStorage.getItem(`userFavorites-${userId}`);
+    if (storedFavorites) {
+        displayUserFavorites(JSON.parse(storedFavorites));
+    } else {
+        fetchAndDisplayUserFavorites(userId);
+    }
 }
