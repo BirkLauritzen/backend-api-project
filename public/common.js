@@ -136,7 +136,7 @@ function getCoordinatesInDb (cafeName,cafeAddress,city,postalCode,descriptions) 
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(coordinates[0]),
+                    body: JSON.stringify(coordinates),
                 });
             });
             return Promise.all(fetchRequest);
