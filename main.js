@@ -274,6 +274,7 @@ app.post
 Table: cafes
 Insert new cafe into the cafes table, and
 it automatically creates a new cafe_id to the cafe there's been added to the table.
+Latitude and longitude have to be in it for the create cafe works
  */
 app.post(`/new-cafe`,(req,res)=>{
     const cafe_name = req.body.cafe_name;
