@@ -1,6 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
+
+/* NavBar */
 body, h1, p, ul {
     margin: 0;
     padding: 0;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 header {
@@ -44,4 +49,37 @@ nav ul li a:hover {
     background-color: #ddd;
     color: #333;
 }
+
+/* Create new cafe */
+.create-new-cafe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.create-new-cafe input,
+.create-new-cafe label,
+.create-new-cafe button {
+    margin-bottom: 10px;
+}
+
+.create-new-cafe input {
+    width: 200px;
+    height: 20px;
+    box-sizing: border-box;
+    border: 2px solid;
+    border-radius: 3px;
+}
+
+.create-new-cafe label {
+    font-size: 20px;
+}
+
+#description {
+    width: 300px;
+    height: 150px;
+    padding: 10px 10px;
+}
+
 
