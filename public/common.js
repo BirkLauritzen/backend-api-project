@@ -182,10 +182,12 @@ function fetchCafeDataAndDisplayInTheBox () {
                 const pTagCafeName = document.createElement('p');
                 pTagCafeName.textContent = cafe.cafe_name;
                 pTagCafeName.id = 'pTagCafeName' + (index + 1);
+                pTagCafeName.classList.add('cafe-name');
 
                 const pTagDescription = document.createElement('p');
                 pTagDescription.textContent = cafe.descriptions;
                 pTagDescription.id = 'pTagDescription' + (index + 1);
+                pTagDescription.classList.add('description');
 
                 const pTagAddress = document.createElement('p');
                 pTagAddress.textContent = cafe.address;
