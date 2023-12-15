@@ -27,13 +27,13 @@
 
 <main>
     <section class="create-new-cafe">
-        <input type="text" id="cafe-name">
+        <input type="text" id="cafe-name" autocomplete="organization">
         <label for="cafe-name">Cafe name</label>
-        <input type="text" id="cafe-address">
+        <input type="text" id="cafe-address" autocomplete="address-line1">
         <label for="cafe-address">Streetname</label>
-        <input type="text" id="city">
+        <input type="text" id="city" autocomplete="address-level2">
         <label for="city">City</label>
-        <input type="number" id="postal-code">
+        <input type="number" id="postal-code" autocomplete="postal-code">
         <label for="postal-code">Postal code</label>
         <input type="text" id="description">
         <label for="description">Add a description</label>
@@ -41,8 +41,8 @@
     </section>
 </main>
 
-<script src="/../main.js"></script>
+<script src="/../public/common.js"></script>
 <script src="new-cafe.js"></script>
-<script src="../login/logout.js"></script>
+<script src="/../public/login/logout.js"></script>
 </body>
 </html>

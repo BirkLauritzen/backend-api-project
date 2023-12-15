@@ -1,3 +1,4 @@
+console.log("common.js loaded");
 const wifiradio = document.querySelector('#wifi-input');
 const kbhKRadio = document.querySelector('#københavn-k');
 const kbhVRadio = document.querySelector('#københavn-v');
@@ -88,6 +89,7 @@ function fetchDataAndDisplayMap () {
 // Get latitude and longitude from the api  https://geocode.maps.co/search?q={address}
 
 function fetchlatandlong (cafeName,cafeAddress,city,postalCode,descriptions) {
+    console.log('fetchlatandlong called');
     return new Promise((resolve, reject) => {
         const apiUrl = `https://nominatim.openstreetmap.org/search?street=${encodeURIComponent(cafeAddress)}&city=${encodeURIComponent(city)}&postalcode=${encodeURIComponent(postalCode)}&format=json`
         fetch(apiUrl)
@@ -103,7 +105,7 @@ function fetchlatandlong (cafeName,cafeAddress,city,postalCode,descriptions) {
                         longitude: parseFloat(lon),
                         cafe_name: cafeName,
                         address: display_name,
-                        description: descriptions
+                        descriptions: descriptions
                     };
                 })
                 console.log("Coordinates Array", cafeDataArray);
