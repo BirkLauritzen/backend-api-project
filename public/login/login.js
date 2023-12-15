@@ -1,6 +1,6 @@
 async function loginUser(loginData) {
     try {
-const response = await fetch('/login', { // Updated endpoint
+const response = await fetch('/login', {
     method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginData)
@@ -13,7 +13,7 @@ const response = await fetch('/login', { // Updated endpoint
         const data = await response.json();
         if (data && data.userId) {
             localStorage.setItem('sessionId', data.userId);
-            window.location.href = '/overview'; // Replace with your dashboard path
+            window.location.href = '/overview';
         } else {
             console.log('Login failed');
         }

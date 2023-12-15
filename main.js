@@ -124,10 +124,10 @@ app.post('/login', (req, res) => {
                 if (result) {
                     console.log('User authenticated successfully');
 
-                    // Set user information in the session
+
                     req.session.user = { id: user.users_id, username: username };
 
-                    // Return a JSON response
+
                     res.json({ success: true, message: 'Authentication successful', userId: user.users_id });
                 } else {
                     console.log('Authentication failed');
