@@ -179,6 +179,7 @@ function fetchCafeDataAndDisplayInTheBox () {
                 const labelForCheckbox = document.createElement('label');
                 labelForCheckbox.setAttribute('for',checkbox.id);
                 labelForCheckbox.textContent = 'Add to favorite'
+                labelForCheckbox.classList.add('favorite-checkbox-label');
 
                 const pTagCafeName = document.createElement('p');
                 pTagCafeName.textContent = cafe.cafe_name;
