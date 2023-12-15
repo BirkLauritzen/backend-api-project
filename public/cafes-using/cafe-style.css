@@ -101,12 +101,20 @@ nav ul li a:hover {
     background-color: #EDE0D4;
     transition: transform 0.3s ease-in-out;
     font-size: 20px;
+    border: 3px solid black;
+    border-radius: 10px;
 }
 .cafe-name,
 .description,
 .address,
 .add-cafe-content p{
     background-color: #EDE0D4;
+    margin-bottom: 15px;
+}
+
+.favorite-checkbox {
+    font-size: 35px;
+    margin-bottom: 30px;
 }
 
 .cafe-box:hover {
@@ -153,4 +161,9 @@ nav ul li a:hover {
 
 .list-of-cafes h2 {
     font-weight: 400;
+    margin-left: 10px;
+}
+
+.list-of-cafes input[type="checkbox"] {
+    margin-left: 10px;
 }
