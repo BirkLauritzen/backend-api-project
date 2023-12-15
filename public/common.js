@@ -192,6 +192,7 @@ function fetchCafeDataAndDisplayInTheBox () {
                 const pTagAddress = document.createElement('p');
                 pTagAddress.textContent = cafe.address;
                 pTagAddress.id = 'pTagAddress' + (index + 1);
+                pTagAddress.classList.add('address');
 
 
                 cafeBox.appendChild(checkbox);
