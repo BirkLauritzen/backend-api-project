@@ -9,7 +9,6 @@ btnForCafe.addEventListener('click', function () {
     console.log(cafeNameInput, cafeAddressInput, cityInput, postalCodeInput,descriptions);
 
     fetchlatandlong(cafeNameInput, cafeAddressInput, cityInput, postalCodeInput,descriptions).then(coordinates => {
-        // Do something with the coordinates if needed
         console.log("Coordinates:", coordinates);
     })
         .catch(error => {

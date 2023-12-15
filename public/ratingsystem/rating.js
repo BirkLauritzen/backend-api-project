@@ -1,11 +1,9 @@
-// main.js
 
-// Simulated initial ratings for cafes (can be replaced by actual data from a server)
 const cafeRatings = {
     cafe1: [4, 5, 3],
     cafe2: [5, 5, 4, 3],
     cafe3: [3, 4],
-    // Add more simulated ratings for other cafes
+
 };
 
 // Function to calculate average rating
@@ -14,7 +12,7 @@ function calculateAverageRating(ratings) {
     return total / ratings.length;
 }
 
-// Function to update cafe ratings based on simulated data
+// Function to update cafe ratings
 function updateCafeRatings() {
     const cafeBoxes = document.querySelectorAll('.cafe-box');
 
@@ -33,7 +31,7 @@ function updateCafeRatings() {
 // Call the function to update cafe ratings when the page loads
 updateCafeRatings();
 
-// Function to handle rating a cafe (simulated for front-end)
+// Function to handle rating a cafe
 function rateCafe(cafeId) {
     const ratings = cafeRatings[cafeId] || [];
     const newRating = parseFloat(prompt(`Enter your rating for ${cafeId} (out of 5):`));
@@ -48,20 +46,8 @@ function rateCafe(cafeId) {
     }
 }
 
-// Function to add a cafe to favorites (simulated for front-end)
-function addToFavorites(cafeId) {
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-    if (!favorites.includes(cafeId)) {
-        favorites.push(cafeId);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-        alert(`Added ${cafeId} to favorites!`);
-    } else {
-        alert(`${cafeId} is already in your favorites!`);
-    }
-}
-
-// Add event listeners to each cafe box for rating and favorites
+// Add event listeners to each cafe box for rating
 document.querySelectorAll('.cafe-box').forEach(cafe => {
     cafe.addEventListener('click', () => {
         const cafeId = cafe.getAttribute('id');
@@ -71,7 +57,6 @@ document.querySelectorAll('.cafe-box').forEach(cafe => {
     cafe.addEventListener('contextmenu', (e) => {
         e.preventDefault();
         const cafeId = cafe.getAttribute('id');
-        addToFavorites(cafeId);
     });
 });
 
