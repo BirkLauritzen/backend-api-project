@@ -68,10 +68,6 @@ CREATE TABLE opening_hours (
 );
 
 
-
-
-
-
 /* Insert data into cafes */
 INSERT INTO cafes (cafe_id, cafe_name, descriptions, address, rating, longitude, latitude, has_wifi)
 VALUES
