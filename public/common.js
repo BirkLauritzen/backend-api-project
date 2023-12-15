@@ -87,6 +87,7 @@ function fetchDataAndDisplayMap () {
 
 
 // Get latitude and longitude from the api  https://geocode.maps.co/search?q={address}
+//https://nominatim.openstreetmap.org/search?street=${encodeURIComponent(cafeAddress)}&city=${encodeURIComponent(city)}&postalcode=${encodeURIComponent(postalCode)}&format=json
 
 function fetchlatandlong (cafeName,cafeAddress,city,postalCode,descriptions) {
     console.log('fetchlatandlong called');
@@ -98,18 +99,25 @@ function fetchlatandlong (cafeName,cafeAddress,city,postalCode,descriptions) {
                 return response.json();
             })
             .then(coordinates => {
-                const cafeDataArray = coordinates.map(coord => {
-                    const {lat,lon,display_name} = coord;
-                    return {
+                console.log("Geocoding API response:", coordinates);
+                let cafeData;
+                if (Array.isArray(coordinates) && coordinates.length > 0 ) {
+                    const {lat,lon} = coordinates[0];
+                    cafeData = {
                         latitude: parseFloat(lat),
                         longitude: parseFloat(lon),
                         cafe_name: cafeName,
-                        address: display_name,
+                        address: coordinates[0].display_name,
                         descriptions: descriptions
                     };
-                })
-                console.log("Coordinates Array", cafeDataArray);
-                resolve(cafeDataArray);
+                } else {
+                    console.error("Geocoding API response is empty or not in the expected format");
+                    reject("Invalid geocoding response");
+                    return;
+                }
+                console.log("Coordinates Data", cafeData);
+                resolve([cafeData]);
+
             })
             .catch(error => {
                 console.log("Error in fetching data", error);
