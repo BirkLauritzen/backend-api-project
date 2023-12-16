@@ -133,6 +133,8 @@ padding: 140px
     font-size: 25px;
 }
 
+
+
 .address {
     font-size: 25px;
     font-weight: 400;
@@ -153,6 +155,7 @@ padding: 140px
     font-size: 30px;
     font-weight: 400;
 }
+
 
 .cafe-box:hover {
     transform: scale(1.1);
