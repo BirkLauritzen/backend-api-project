@@ -2,6 +2,7 @@
   "name": "backend-api-project",
   "version": "1.0.0",
   "dependencies": {
+    "@types/express": "^4.17.21",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

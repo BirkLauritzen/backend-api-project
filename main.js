@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 const path = require('path');
 
+
 const app = express();
 const port = 3000;
 
@@ -20,7 +21,13 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
-app.use(express.static('public'));
+app.use((req, res, next) => {
+    if (req.url.endsWith('.css')) {
+        res.header('Content-Type', 'text/css');
+    }
+    next();
+});
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(expressSession({
     secret: process.env.SECRET,
@@ -30,6 +37,8 @@ app.use(expressSession({
         sameSite: 'lax'
     }
 }));
+
+
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
