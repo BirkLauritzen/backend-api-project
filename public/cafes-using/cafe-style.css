@@ -77,11 +77,6 @@ nav ul li a:hover {
     justify-content: center;
 }
 
-#submit-btn {
-    margin-bottom: 20px;
-    padding: 14px 40px;
-    font-size: 16px;
-}
 .cafe-info-section {
     display: flex;
     flex-wrap: wrap;
@@ -104,6 +99,15 @@ padding: 140px
     font-size: 20px;
     border: 3px solid black;
     border-radius: 10px;
+}
+
+#submit-btn {
+    margin-bottom: 20px;
+    padding: 14px 40px;
+    font-size: 16px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #EDE0D4;
 }
 
 .cafe-name,
