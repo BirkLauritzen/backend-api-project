@@ -139,7 +139,17 @@ padding: 140px
     margin-top: 50px;
 }
 
+.add-cafe-content {
+    height: 50vh;
+}
+
 .add-cafe-content p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: 0;
+    text-align: center;
     font-size: 30px;
     font-weight: 400;
 }
