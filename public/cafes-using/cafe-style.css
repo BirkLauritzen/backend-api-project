@@ -90,11 +90,15 @@ nav ul li a:hover {
     text-align: center;
 }
 
-/*#f0f0f0*/
+/*#f0f0f0
+width: 150px
+padding: 140px
+*/
 .cafe-box {
-    width: 150px;
+    box-sizing: border-box;
+    width: 400px;
     margin-bottom: 40px;
-    padding: 145px;
+    padding: 50px;
     background-color: #EDE0D4;
     transition: transform 0.3s ease-in-out;
     font-size: 20px;
