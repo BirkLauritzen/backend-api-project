@@ -37,7 +37,23 @@ document.addEventListener('DOMContentLoaded', fetchUserInfo);
 }*/
 
 // Fetch and display user's favorite cafes
-
+function fetchAndDisplayUserFavorites(userId) {
+    fetch(`/favorites/${userId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(favorites => {
+            console.log('Favorite cafes:', favorites);
+            localStorage.setItem(`userFavorites-${userId}`, JSON.stringify(favorites));
+            displayUserFavorites(favorites);
+        })
+        .catch(error => {
+            console.error('Error fetching favorites:', error);
+        });
+}
 // Display user's favorite cafes
 function fetchAndDisplayUserFavorites(userId) {
     console.log('UserId:', userId);
