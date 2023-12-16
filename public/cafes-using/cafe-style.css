@@ -19,6 +19,7 @@ header {
 .logo img {
     max-width: 110px;
 }
+
 /*Log out btn*/
 .account-logout {
     position: absolute;
@@ -56,9 +57,6 @@ nav ul li a:hover {
 }
 
 
-
-
-
 /*Map section*/
 .map {
     display: flex;
@@ -78,7 +76,6 @@ nav ul li a:hover {
     display: flex;
     justify-content: center;
 }
-
 
 #submit-btn {
     margin-bottom: 20px;
@@ -163,7 +160,6 @@ nav ul li a:hover {
     color: inherit;
     font-size: 20px;
 }
-
 
 #cafe {
     font-size: 20px;

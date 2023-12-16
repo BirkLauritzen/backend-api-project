@@ -31,14 +31,24 @@ function fetchCafesAndDisplay () {
             cafes.forEach(cafe => {
                 const shouldDisplayCafe =
                     (wifiradio.checked && cafe.has_wifi) ||
-                    (kbhKRadio.checked && cafe.address.includes('København K')) ||
-                    (kbhNRadio.checked && cafe.address.includes('København N')) ||
-                    (kbhNVRadio.checked && cafe.address.includes('København NV')) ||
-                    (kbhVRadio.checked && cafe.address.includes('København V')) ||
-                    (kbhSRadio.checked && cafe.address.includes('København S')) ||
-                    (kbhSVRadio.checked && cafe.address.includes('København SV')) ||
-                    (kbhØRadio.checked && cafe.address.includes('København Ø')) ||
-                    (frederiksbjergRadio.checked && cafe.address.includes('Frederiksberg'));
+                    (
+                        (kbhKRadio.checked || kbhNRadio.checked || kbhNVRadio.checked || kbhVRadio.checked ||
+                            kbhSRadio.checked || kbhSVRadio.checked || kbhØRadio.checked || frederiksbjergRadio.checked) &&
+                        (
+                            (kbhKRadio.checked && (cafe.address.includes('København K') || cafe.address.includes('Indre By'))) ||
+                            (kbhNRadio.checked && (cafe.address.includes('København N') || cafe.address.includes('Nørrebro'))) ||
+                            (kbhNVRadio.checked && (cafe.address.includes('København NV') || cafe.address.includes('Mjølnerparken') ||
+                                cafe.address.includes('Bispebjerg'))) ||
+                            (kbhVRadio.checked && (cafe.address.includes('København V') || cafe.address.includes('Vesterbro'))) ||
+                            (kbhSRadio.checked && (cafe.address.includes('København S') ||
+                                cafe.address.includes('Sundbyerne') || cafe.address.includes('Amagerbro'))) ||
+                            (kbhSVRadio.checked && (cafe.address.includes('København SV') ||
+                                cafe.address.includes('Sluseholmen'))) ||
+                            (kbhØRadio.checked && (cafe.address.includes('København Ø') || cafe.address.includes('Østerbro'))) ||
+                            (frederiksbjergRadio.checked && cafe.address.includes('Frederiksberg'))
+                        )
+                    );
+
 
                 console.log("cafe:", cafe.cafe_name, "Should display:", shouldDisplayCafe);
 
