@@ -108,7 +108,8 @@ nav ul li a:hover {
 .cafe-name,
 .description,
 .address,
-.add-cafe-content p{
+.add-cafe-content p,
+.rating {
     background-color: #EDE0D4;
     margin-bottom: 15px;
 }
@@ -126,7 +127,8 @@ nav ul li a:hover {
     font-size: 30px;
 }
 
-.description {
+.description,
+.rating {
     font-size: 25px;
 }
 
