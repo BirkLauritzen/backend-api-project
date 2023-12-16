@@ -25,22 +25,13 @@ async function fetchUserInfo() {
 
 document.addEventListener('DOMContentLoaded', fetchUserInfo);
 
-/*function updateUserFavoriteList(favorites) {
-    const ulFavoriteList = document.querySelector('#cafe-list');
-    ulFavoriteList.innerHTML = '';
 
-    favorites.forEach(favorite => {
-        const liElement = document.createElement('li');
-        liElement.textContent = `${favorite.cafe_name} - Rating: ${favorite.rating}`;
-        ulFavoriteList.appendChild(liElement);
-    });
-}*/
 
 // Fetch and display user's favorite cafes
 // Display user's favorite cafes
 function fetchAndDisplayUserFavorites(userId) {
     console.log('UserId:', userId);
-    fetch(`/favorites/${userId}?timestamp=${new Date().getTime()}`)
+    fetch(`/favorites/${userId}}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
