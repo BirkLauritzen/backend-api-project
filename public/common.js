@@ -191,6 +191,12 @@ function fetchCafeDataAndDisplayInTheBox () {
                 pTagDescription.id = 'pTagDescription' + (index + 1);
                 pTagDescription.classList.add('description');
 
+                const pTagRating = document.createElement('p');
+                pTagRating.textContent = cafe.rating;
+                pTagRating.id = 'pTagRating' + (index + 1);
+                pTagRating.classList.add('rating');
+
+
                 const pTagAddress = document.createElement('p');
                 pTagAddress.textContent = cafe.address;
                 pTagAddress.id = 'pTagAddress' + (index + 1);
@@ -201,6 +207,7 @@ function fetchCafeDataAndDisplayInTheBox () {
                 cafeBox.appendChild(labelForCheckbox);
                 cafeBox.appendChild(pTagCafeName);
                 cafeBox.appendChild(pTagDescription);
+                cafeBox.appendChild(pTagRating);
                 cafeBox.appendChild(pTagAddress);
                 cafeSection.appendChild(cafeBox);
             });
