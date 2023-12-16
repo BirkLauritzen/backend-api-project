@@ -95,11 +95,19 @@ nav ul li a:hover {
 .create-new-cafe label {
     font-size: 20px;
 }
-
 #description {
     width: 300px;
     height: 150px;
     padding: 10px 10px;
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 3px;
+    vertical-align: top;
+    line-height: normal;
+    white-space: normal;
+    resize: none;
+    margin-bottom: 10px;
 }
+
 
 
