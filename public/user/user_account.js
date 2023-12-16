@@ -25,7 +25,7 @@ async function fetchUserInfo() {
 
 document.addEventListener('DOMContentLoaded', fetchUserInfo);
 
-function updateUserFavoriteList(favorites) {
+/*function updateUserFavoriteList(favorites) {
     const ulFavoriteList = document.querySelector('#cafe-list');
     ulFavoriteList.innerHTML = '';
 
@@ -34,11 +34,14 @@ function updateUserFavoriteList(favorites) {
         liElement.textContent = `${favorite.cafe_name} - Rating: ${favorite.rating}`;
         ulFavoriteList.appendChild(liElement);
     });
-}
+}*/
 
 // Fetch and display user's favorite cafes
+
+// Display user's favorite cafes
 function fetchAndDisplayUserFavorites(userId) {
-    fetch(`/favorites/${userId}`)
+    console.log('UserId:', userId);
+    fetch(`/favorites/${userId}?timestamp=${new Date().getTime()}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -46,15 +49,19 @@ function fetchAndDisplayUserFavorites(userId) {
             return response.json();
         })
         .then(favorites => {
-            localStorage.setItem(`userFavorites-${userId}`, JSON.stringify(favorites));
-            displayUserFavorites(favorites);
+            console.log('Favorite cafes:', favorites);
+            if (favorites.length > 0) {
+                displayUserFavorites(favorites);
+                localStorage.setItem(`userFavorites-${userId}`, JSON.stringify(favorites));
+            } else {
+                console.log('No cafes found for this user');
+            }
+
         })
         .catch(error => {
             console.error('Error fetching favorites:', error);
         });
 }
-
-// Display user's favorite cafes
 function displayUserFavorites(favorites) {
     const ulFavoriteList = document.querySelector('#cafe-list');
     ulFavoriteList.innerHTML = '';
@@ -67,12 +74,18 @@ function displayUserFavorites(favorites) {
 }
 
 // Call this function when the user account page loads
-const userId = localStorage.getItem('sessionId');
-if (userId) {
-    const storedFavorites = localStorage.getItem(`userFavorites-${userId}`);
-    if (storedFavorites) {
-        displayUserFavorites(JSON.parse(storedFavorites));
-    } else {
-        fetchAndDisplayUserFavorites(userId);
+document.addEventListener('DOMContentLoaded', function () {
+    const userId = localStorage.getItem('sessionId');
+    console.log('User Id:', userId);
+
+    if (userId) {
+        const storedFavorites = localStorage.getItem(`userFavorites-${userId}`);
+        if (storedFavorites) {
+            displayUserFavorites(JSON.parse(storedFavorites));
+        } else {
+            fetchAndDisplayUserFavorites(userId);
+        }
     }
-}
+})
+
+console.log('Domcontentloaded event fired');

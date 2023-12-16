@@ -163,7 +163,6 @@ Table: cafes
 app.get('/cafe', (req,res)=> {
     const q = `select * from cafes`;
     connection.query(q,(error,result)=>{
-        console.log(error,result)
         res.send(result);
     });
 });
@@ -309,7 +308,9 @@ and if not it creates a new user.
 
 // Endpoint to get a user's favorite cafes
 app.get('/favorites/:userId', (req, res) => {
+    res.setHeader('Cache-Control', 'no-store');
     const userId = req.params.userId;
+    console.log('Requested user id:', userId);
 
     const query = `
         SELECT c.cafe_name, c.address, c.rating
@@ -339,14 +340,17 @@ app.post('/new-favorite', (req, res) => {
     // Handle multiple favorite cafe names
     favoriteCafeNames.forEach(cafeName => {
         const insertFavoriteQuery = `
-            INSERT INTO favorites (cafe_id, favorite_cafe_name, users_id) 
+            INSERT INTO favorites (cafe_id, favorite_cafe_name, users_id,first_name,last_name) 
             VALUES (
                 (SELECT cafe_id FROM cafes WHERE cafe_name = ?),
                 ?,
-                ?
+                ?,
+                (select first_name from users where users_id = ?),
+                (select last_name from users where users_id = ?)    
             )`;
+        console.log('inserted query:', insertFavoriteQuery);
 
-        connection.query(insertFavoriteQuery, [cafeName, cafeName, userId], (error, result) => {
+        connection.query(insertFavoriteQuery, [cafeName, cafeName, userId,userId,userId], (error, result) => {
             if (error) {
                 console.error("Error inserting into favorites:", error);
                 // Consider how to handle errors in a loop - maybe collect and send them together
