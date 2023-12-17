@@ -345,12 +345,16 @@ app.delete('/favorites/remove/:userId/:cafeName', (req, res) => {
     const userId = req.params.userId;
     const cafeName = req.params.cafeName;
 
+    console.log(cafeName);
+
     const subquery = `
         SELECT cafe_id
         FROM favorites
-        WHERE users_id = ? AND favorite_cafe_name = ?
+        WHERE users_id = ?
+          AND favorite_cafe_name = ?
         LIMIT 1
     `;
+    console.log(subquery, [userId, cafeName]);
 
     connection.query(subquery, [userId, cafeName], (error, result) => {
         if (error) {
@@ -371,6 +375,7 @@ app.delete('/favorites/remove/:userId/:cafeName', (req, res) => {
             DELETE FROM favorites
             WHERE users_id = ? AND cafe_id = ?
         `;
+        console.log(removeQuery, [userId, cafeId]);
 
         connection.query(removeQuery, [userId, cafeId], (error, result) => {
             if (error) {

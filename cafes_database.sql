@@ -13,6 +13,12 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS cafes;
 DROP TABLE IF EXISTS opening_hours;
 
+SELECT cafe_id
+FROM favorites
+WHERE users_id = ?
+  AND favorite_cafe_name = ?
+LIMIT 1
+
 /* Create tables */
 create table cafes
 (

@@ -80,7 +80,7 @@ function displayUserFavorites(favorites, index) {
         // checkbox
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.value = cafe;
+        checkbox.value = cafe.cafe_name;
         checkbox.id = `checkbox-${index}-${i + 1}`;
         liElement.appendChild(checkbox);
 
