@@ -342,15 +342,16 @@ app.get('/favorites/:userId', (req, res) => {
     });
 });
 
-app.delete('/favorites/remove/:userId/', (req, res) => {
-    const userId = req.params.userId;
+app.delete('/favorites/remove/:userId/:cafeId', (req, res) => {
+    const userId = req.params.users_id;
+    const cafeId = req.params.cafe_id
 
     const removeQuery = `
         delete FROM favorites
-        WHERE users_id = ?
+        WHERE users_id = ? and cafe_id = ?
     `;
 
-    connection.query(removeQuery, [userId], (error, result) => {
+    connection.query(removeQuery, [userId, cafeId], (error, result) => {
         if (error) {
             console.error("Error inserting into favorites:", error);
             res.status(500).send("Internal server error");
