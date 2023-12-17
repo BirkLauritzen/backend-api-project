@@ -47,9 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     })
                     .then(data => {
                         console.log('Favorite added:', data);
-
-                        const favoritesAddedEvent = new Event('favoritesAdded');
-                        document.dispatchEvent(favoritesAddedEvent);
+                        alert('Favorite cafe added successfully!'); // Alert here
                     })
                     .catch(error => {
                         console.error('Error during fetch:', error);
@@ -58,6 +56,5 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log('No cafe selected or user not identified');
             }
         }
-
     });
 });
