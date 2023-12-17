@@ -342,6 +342,25 @@ app.get('/favorites/:userId', (req, res) => {
     });
 });
 
+app.delete('/favorites/remove/:userId/', (req, res) => {
+    const userId = req.params.userId;
+
+    const removeQuery = `
+        delete FROM favorites
+        WHERE users_id = ?
+    `;
+
+    connection.query(removeQuery, [userId], (error, result) => {
+        if (error) {
+            console.error("Error inserting into favorites:", error);
+            res.status(500).send("Internal server error");
+        } else {
+            res.status(200).send({ message: 'Favorite removed successfully' });
+        }
+    });
+});
+
+
 
 app.post('/new-favorite', (req, res) => {
     const { favoriteCafeNames, userId } = req.body;
@@ -363,7 +382,6 @@ app.post('/new-favorite', (req, res) => {
         connection.query(insertFavoriteQuery, [cafeName, cafeName, userId,userId,userId], (error, result) => {
             if (error) {
                 console.error("Error inserting into favorites:", error);
-                // Consider how to handle errors in a loop - maybe collect and send them together
             }
         });
     });
@@ -372,34 +390,4 @@ app.post('/new-favorite', (req, res) => {
     res.json({ success: true, message: "New favorite cafes added successfully" });
 });
 
-/* const checkUserQ = `SELECT users_id
-                FROM users
-                WHERE first_name = ? AND last_name = ?
-            `;
 
-        connection.query(checkUserQ, [first_name, last_name], (error, userResult) => {
-            if (error) {
-                console.error(error);
-                res.status(500).send("Internal server error");
-            }
-
-            if (userResult.length === 0) {
-                const createUserQ = `INSERT INTO users
-                        (first_name, last_name)
-                        VALUES (?, ?)
-                    `;
-
-                connection.query(createUserQ, [first_name, last_name], (error, createUserResult) => {
-                    if (error) {
-                        console.error(error);
-                        res.status(500).send("Internal server error");
-                        return;
-                    }
-
-                    console.log("New user created:", createUserResult.insertId);
-                    res.send("New favorite cafe added, and new user created");
-                });
-            } else {
-                res.send("New favorite cafe added");
-            }
-        });*/
