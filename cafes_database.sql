@@ -271,6 +271,7 @@ set address = case
                   else address
     END;
 
+
 UPDATE cafes
 SET address = CASE
                   WHEN cafe_name = 'Café Europa 1989' THEN 'Amagertorv 1, 1160 København K'

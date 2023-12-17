@@ -48,13 +48,15 @@ function fetchAndDisplayUserFavorites(userId) {
         })
         .then(favorites => {
             console.log('Favorite cafes:', favorites);
-            const storedFavorites = localStorage.getItem(`userFavorites-${userId}`);
-            const combinedFavorites = storedFavorites
-                ? [...JSON.parse(storedFavorites), ...favorites]
-                : favorites;
 
             if (favorites.length > 0) {
-                displayUserFavorites(combinedFavorites);
+                displayUserFavorites(favorites);
+
+                const storedFavorites = localStorage.getItem(`userFavorites-${userId}`);
+                const combinedFavorites = storedFavorites
+                    ? [...JSON.parse(storedFavorites), ...favorites]
+                    : favorites;
+
                 localStorage.setItem(`userFavorites-${userId}`, JSON.stringify(combinedFavorites));
             } else {
                 console.log('No cafes found for this user');
@@ -72,7 +74,7 @@ function displayUserFavorites(favorites) {
 
     favorites.forEach(cafe => {
         const liElement = document.createElement('li');
-        liElement.textContent = `${cafe.cafe_name} - ${cafe.address} - Rating: ${cafe.rating}`;
+        liElement.textContent = `${cafe.cafe_name} - ${cafe.address}`;
         ulFavoriteList.appendChild(liElement);
     });
 }
