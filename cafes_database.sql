@@ -72,23 +72,22 @@ CREATE TABLE opening_hours (
 /* Insert data into cafes */
 INSERT INTO cafes (cafe_id, cafe_name, descriptions, address, rating, longitude, latitude, has_wifi)
 VALUES
-    (1, 'Café Europa 1989', 'this café is inspired by European café culture and has a cozy atmosphere.', 'Amagertorv 1, 1160 Copenhagen', 3.5, 12.579290, 55.678670, true),
-    (2, 'Café Victor', 'this café is known for its cozy atmosphere and is a popular meeting place.', 'Ny Østergade 8, 1101 Copenhagen', 4, 12.583250, 55.680750, true),
-    (3, 'Democratic Coffee', 'this café is situated inside the Copenhagen Main Library and is known for its coffee and almond croissants.', 'Krystalgade 15, 1172 Copenhagen', 4.5, 12.573650, 55.680880, true),
-    (4, 'Absalon', 'this former church has been transformed into a communal space and is a good place to meet with your study group.', 'Sønder Boulevard 73, 1720 Copenhagen', 4.5, 12.550310, 55.665390, true),
+    (1, 'Café Europa 1989', 'this café is inspired by European café culture and has a cozy atmosphere.', 'Amagertorv 1, 1160 København K', 3.5, 12.579290, 55.678670, true),
+    (2, 'Café Victor', 'this café is known for its cozy atmosphere and is a popular meeting place.', 'Ny Østergade 8, 1101 København K', 4, 12.583250, 55.680750, true),
+    (3, 'Democratic Coffee', 'this café is situated inside the Copenhagen Main Library and is known for its coffee and almond croissants.', 'Krystalgade 15, 1172 København K', 4.5, 12.573650, 55.680880, true),
+    (4, 'Absalon', 'this former church has been transformed into a communal space and is a good place to meet with your study group.', 'Sønder Boulevard 73, 1720 København V', 4.5, 12.550310, 55.665390, true),
     (5, 'Henckell', 'this café has beautiful interiors and large windows, perfect for people-watching when you can no longer focus.', 'Gl. Kongevej 108, 1850 Frederiksberg', 5, 12.543710, 55.676040, true),
-    (6, 'Paludan Bog & Café', 'this cafe is known for its cozy atmosphere and extensive book collection', 'Fiolstræde 10, 1171 Copenhagen', 4.5, 12.573241, 55.680442, true),
-    (7, 'cafe Bjerget', 'this cafe is known for its delicious coffee and homemade cakes', 'Bispebjerg Torv 8, 2400 Copenhagen', 4, 12.531878, 55.716591, true),
-    (8, 'Café Retro', 'this cafe is known for its vegan food and cozy atmosphere', 'Knabrostræde 26, 1210 Copenhagen', 2.5, 12.575718, 55.676855, false),
-    (9, 'Kaffeplantagen', 'this cafe is known for its great coffee and relaxed atmosphere', 'Skt. Hans Torv 3, 2200 Copenhagen', 4, 12.560347, 55.690607, true),
-    (10, 'Café Dyrehaven', 'this cafe is known for its brunch and cozy atmosphere', 'Sønder Boulevard 72, 1720 Copenhagen', 4, 12.549581, 55.665790, true),
-    (11, 'The Living Room', 'this cafe is known for its cozy atmosphere and great coffee', 'Larsbjørnsstræde 17, 1454 Copenhagen', 4.5, 12.568956, 55.678656, true),
-    (12, 'Café Sommersko', 'this cafe is known for its cozy atmosphere and great food', 'Kronprinsensgade 6, 1114 Copenhagen', 3, 12.579108, 55.680740, false),
-    (13, 'Café Katz', 'this cafe is known for its cozy atmosphere and great coffee', 'Nørrebrogade 88, 2200 Copenhagen', 4, 12.552292, 55.692415, false),
-    (14, 'Café Norden', 'this cafe is known for its great coffee and cozy atmosphere', 'Østergade 61, 1100 Copenhagen', 2.5, 12.580186, 55.678973, false),
-    (15, 'Studenterhuset', 'this cafe is known for its cozy atmosphere and great coffee', 'Købmagergade 52, 1150 Copenhagen', 4, 12.576420, 55.681489, true),
-    (16, 'Riccos', 'this cafe is known for its cozy atmosphere, great food and coffee', 'Istedgade 119, 1650 Copenhagen', 3, 12.548264, 55.667615, true);
-
+    (6, 'Paludan Bog & Café', 'this cafe is known for its cozy atmosphere and extensive book collection', 'Fiolstræde 10, 1171 København K', 4.5, 12.573241, 55.680442, true),
+    (7, 'cafe Bjerget', 'this cafe is known for its delicious coffee and homemade cakes', 'Bispebjerg Torv 8, 2400 København NV', 4, 12.531878, 55.716591, true),
+    (8, 'Café Retro', 'this cafe is known for its vegan food and cozy atmosphere', 'Knabrostræde 26, 1210 København K', 2.5, 12.575718, 55.676855, false),
+    (9, 'Kaffeplantagen', 'this cafe is known for its great coffee and relaxed atmosphere', 'Skt. Hans Torv 3, 2200 København N', 4, 12.560347, 55.690607, true),
+    (10, 'Café Dyrehaven', 'this cafe is known for its brunch and cozy atmosphere', 'Sønder Boulevard 72, 1720 København V', 4, 12.549581, 55.665790, true),
+    (11, 'The Living Room', 'this cafe is known for its cozy atmosphere and great coffee', 'Larsbjørnsstræde 17, 1454 København K', 4.5, 12.568956, 55.678656, true),
+    (12, 'Café Sommersko', 'this cafe is known for its cozy atmosphere and great food', 'Kronprinsensgade 6, 1114 København K', 3, 12.579108, 55.680740, false),
+    (13, 'Café Katz', 'this cafe is known for its cozy atmosphere and great coffee', 'Nørrebrogade 88, 2200 København N', 4, 12.552292, 55.692415, false),
+    (14, 'Café Norden', 'this cafe is known for its great coffee and cozy atmosphere', 'Østergade 61, 1100 København K', 2.5, 12.580186, 55.678973, false),
+    (15, 'Studenterhuset', 'this cafe is known for its cozy atmosphere and great coffee', 'Købmagergade 52, 1150 København K', 4, 12.576420, 55.681489, true),
+    (16, 'Riccos', 'this cafe is known for its cozy atmosphere, great food and coffee', 'Istedgade 119, 1650 København V', 3, 12.548264, 55.667615, true);
 
 /* Insert data into users */
 INSERT INTO users (users_id, first_name, last_name, email, username, hashed_password) VALUES
@@ -266,30 +265,6 @@ VALUES
 create index cafe_id
     on favorites (cafe_id);
 
-update cafes
-set address = case
-                  when cafe_id = 5 then 'Gl. Kongevej 108, 1850 Frederiksberg'
-                  else address
-    END;
 
 
-UPDATE cafes
-SET address = CASE
-                  WHEN cafe_name = 'Café Europa 1989' THEN 'Amagertorv 1, 1160 København K'
-                  WHEN cafe_name = 'Café Victor' THEN 'Ny Østergade 8, 1101 København K'
-                  WHEN cafe_name = 'Democratic Coffee' THEN 'Krystalgade 15, 1172 København K'
-                  WHEN cafe_name = 'Absalon' THEN 'Sønder Boulevard 73, 1720 København V'
-                  WHEN cafe_name = 'Henckell' THEN 'Gl. Kongevej 108, 1850 Frederiksberg'
-                  WHEN cafe_name = 'Paludan Bog & Café' THEN 'Fiolstræde 10, 1171 København K'
-                  WHEN cafe_name = 'Cafe Bjerget' THEN 'Bispebjerg Torv 8, 2400 København NV'
-                  WHEN cafe_name = 'Café Retro' THEN 'Knabrostræde 26, 1210 København K'
-                  WHEN cafe_name = 'Kaffeplantagen' THEN 'Skt. Hans Torv 3, 2200 København N'
-                  WHEN cafe_name = 'Café Dyrehaven' THEN 'Sønder Boulevard 72, 1720 København V'
-                  WHEN cafe_name = 'The Living Room' THEN 'Larsbjørnsstræde 17, 1454 København K'
-                  WHEN cafe_name = 'Café Sommersko' THEN 'Kronprinsensgade 6, 1114 København K'
-                  WHEN cafe_name = 'Café Katz' THEN 'Nørrebrogade 88, 2200 København N'
-                  WHEN cafe_name = 'Café Norden' THEN 'Østergade 61, 1100 København K'
-                  WHEN cafe_name = 'Studenterhuset' THEN 'Købmagergade 52, 1150 København K'
-                  WHEN cafe_name = 'Riccos' THEN 'Istedgade 119, 1650 København V'
-                  ELSE address
-    END;
+
