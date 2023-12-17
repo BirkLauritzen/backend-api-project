@@ -74,8 +74,20 @@ function displayUserFavorites(favorites) {
 
     favorites.forEach(cafe => {
         const liElement = document.createElement('li');
-        liElement.textContent = `${cafe.cafe_name} - ${cafe.address}`;
+
+        // checkbox
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = cafe.cafe_id;
+        liElement.appendChild(checkbox);
+
+        //checkbox label
+        const label = document.createElement("label");
+        label.textContent = `${cafe.cafe_name} - ${cafe.address}`;
+        liElement.appendChild(label);
+
         ulFavoriteList.appendChild(liElement);
+
     });
 }
 
