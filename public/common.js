@@ -229,13 +229,5 @@ function fetchCafeDataAndDisplayInTheBox () {
 }
 
 
-/*function isLoggedIn () {
-    const isUserLoggedIn = window.sessionStorage.getItem('user');
-    return Boolean(isUserLoggedIn);
-}*/
-/* if (!isLoggedIn()) {
-        alert('Please log in to add a favorite cafe');
-        return;
-    }*/
 
 
