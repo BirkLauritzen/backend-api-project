@@ -76,10 +76,11 @@ function displayUserFavorites(favorites, index) {
     favorites.forEach((cafe, i) => {
         const liElement = document.createElement('li');
 
+        const cafeId = cafe.cafes_id;
         // checkbox
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.value = cafe.cafe_id;
+        checkbox.value = cafe;
         checkbox.id = `checkbox-${index}-${i + 1}`;
         liElement.appendChild(checkbox);
 
@@ -109,21 +110,21 @@ function displayUserFavorites(favorites, index) {
 }
 
 function removeSelectedFavorites (userId) {
-    const selectedboxes = document.querySelectorAll('#cafe-list input[type="checkbox"]:checked');
+    const selectedBoxes = document.querySelectorAll('#cafe-list input[type="checkbox"]:checked');
 
-    if (selectedboxes.length === 0) {
+    if (selectedBoxes.length === 0) {
         console.log('No cafes for removal');
         return;
     }
 
-    Array.from(selectedboxes).forEach(checkbox => {
+    Array.from(selectedBoxes).forEach(checkbox => {
         const cafeId = checkbox.value;
         removeFavorites(userId,cafeId);
     })
 }
 
-function removeFavorites(userId, cafeId) {
-    fetch(`/favorites/remove/${userId}/${cafeId}`, {
+function removeFavorites(userId, cafeName) {
+    fetch(`/favorites/remove/${userId}/${cafeName}`, {
         method: 'DELETE',
         credentials: 'include',
     })

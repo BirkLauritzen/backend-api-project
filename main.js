@@ -5,6 +5,7 @@ const cors = require("cors");
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 const path = require('path');
+const {compare} = require("bcrypt");
 
 
 const app = express();
@@ -342,25 +343,28 @@ app.get('/favorites/:userId', (req, res) => {
     });
 });
 
-app.delete('/favorites/remove/:userId/:cafeId', (req, res) => {
-    const userId = req.params.users_id;
-    const cafeId = req.params.cafe_id
+app.delete('/favorites/remove/:userId/:cafeName', (req, res) => {
+    const userId = req.params.userId;
+    const cafeName = req.params.cafeName;
 
     const removeQuery = `
-        delete FROM favorites
-        WHERE users_id = ? and cafe_id = ?
+        DELETE FROM favorites
+        WHERE users_id = ? AND cafe_id = (
+            SELECT cafe_id FROM favorites
+            WHERE users_id = ? AND favorite_cafe_name = ?
+            LIMIT 1
+        )
     `;
 
-    connection.query(removeQuery, [userId, cafeId], (error, result) => {
+    connection.query(removeQuery, [userId, userId, cafeName], (error, result) => {
         if (error) {
-            console.error("Error inserting into favorites:", error);
+            console.error("Error removing from favorites:", error);
             res.status(500).send("Internal server error");
         } else {
-            res.status(200).send({ message: 'Favorite removed successfully' });
+            res.status(200).json({ message: 'Favorite removed successfully' });
         }
     });
 });
-
 
 
 app.post('/new-favorite', (req, res) => {

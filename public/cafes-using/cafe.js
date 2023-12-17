@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const checkboxIdPrefix = 'checkbox';
         const cafeNameIdPrefix = 'pTagCafeName';
-        let selectedCafeName = []; // Declare the variable outside the click event listener
+        let selectedCafeName = [];
 
         const checkboxes = document.querySelectorAll(`[id^="${checkboxIdPrefix}"]`);
         const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         const favoritesAddedEvent = new Event('favoritesAdded');
                         document.dispatchEvent(favoritesAddedEvent);
-                        // Update UI or alert user
                     })
                     .catch(error => {
                         console.error('Error during fetch:', error);
