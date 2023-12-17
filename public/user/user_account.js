@@ -68,25 +68,6 @@ function fetchAndDisplayUserFavorites(userId) {
         });
 }
 
-function removeFavorites(userId, cafeId) {
-    fetch(`/favorites/remove/${userId}/${cafeId}`, {
-        method: 'DELETE',
-        credentials: 'include',
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data.message);
-            fetchAndDisplayUserFavorites(userId);
-        })
-        .catch(error => {
-            console.error('Error removing favorite:', error);
-        });
-}
 
 function displayUserFavorites(favorites, index) {
     const ulFavoriteList = document.querySelector('#cafe-list');
@@ -126,6 +107,27 @@ function displayUserFavorites(favorites, index) {
 
     });
 }
+
+function removeFavorites(userId, cafeId) {
+    fetch(`/favorites/remove/${userId}/${cafeId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.message);
+            fetchAndDisplayUserFavorites(userId);
+        })
+        .catch(error => {
+            console.error('Error removing favorite:', error);
+        });
+}
+
 
 // Call this function when the user account page loads
 document.addEventListener('DOMContentLoaded', async function () {
