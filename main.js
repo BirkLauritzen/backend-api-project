@@ -318,12 +318,10 @@ and if not it creates a new user.
 
 // Endpoint to get a user's favorite cafes
 app.get('/favorites/:userId', (req, res) => {
-    res.setHeader('Cache-Control', 'no-store');
     const userId = req.params.userId;
-    console.log('Requested user id:', userId);
 
     const query = `
-        SELECT distinct c.cafe_name, c.address, c.rating
+        SELECT c.cafe_name, c.address, c.rating
         FROM favorites f
         JOIN cafes c ON f.cafe_id = c.cafe_id
         WHERE f.users_id = ?
@@ -367,26 +365,24 @@ app.delete('/favorites/remove/:userId/:cafeName', (req, res) => {
 });
 
 
+
 app.post('/new-favorite', (req, res) => {
     const { favoriteCafeNames, userId } = req.body;
 
     // Handle multiple favorite cafe names
     favoriteCafeNames.forEach(cafeName => {
-        console.log('Processing cafes:', cafeName);
         const insertFavoriteQuery = `
-            INSERT INTO favorites (cafe_id, favorite_cafe_name, users_id,first_name,last_name) 
+            INSERT INTO favorites (cafe_id, favorite_cafe_name, users_id) 
             VALUES (
                 (SELECT cafe_id FROM cafes WHERE cafe_name = ?),
                 ?,
-                ?,
-                (select first_name from users where users_id = ?),
-                (select last_name from users where users_id = ?)    
+                ?
             )`;
-        console.log('inserted query:', insertFavoriteQuery);
 
-        connection.query(insertFavoriteQuery, [cafeName, cafeName, userId,userId,userId], (error, result) => {
+        connection.query(insertFavoriteQuery, [cafeName, cafeName, userId], (error, result) => {
             if (error) {
                 console.error("Error inserting into favorites:", error);
+                // Consider how to handle errors in a loop - maybe collect and send them together
             }
         });
     });
