@@ -322,7 +322,7 @@ app.get('/favorites/:userId', (req, res) => {
     console.log('Requested user id:', userId);
 
     const query = `
-        SELECT c.cafe_name, c.address, c.rating
+        SELECT distinct c.cafe_name, c.address, c.rating
         FROM favorites f
         JOIN cafes c ON f.cafe_id = c.cafe_id
         WHERE f.users_id = ?
@@ -348,6 +348,7 @@ app.post('/new-favorite', (req, res) => {
 
     // Handle multiple favorite cafe names
     favoriteCafeNames.forEach(cafeName => {
+        console.log('Processing cafes:', cafeName);
         const insertFavoriteQuery = `
             INSERT INTO favorites (cafe_id, favorite_cafe_name, users_id,first_name,last_name) 
             VALUES (

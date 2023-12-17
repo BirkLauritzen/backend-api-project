@@ -47,6 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     })
                     .then(data => {
                         console.log('Favorite added:', data);
+
+                        const favoritesAddedEvent = new Event('favoritesAdded');
+                        document.dispatchEvent(favoritesAddedEvent);
                         // Update UI or alert user
                     })
                     .catch(error => {
