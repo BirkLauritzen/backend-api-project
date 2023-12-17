@@ -86,9 +86,38 @@ function displayUserFavorites(favorites) {
         label.textContent = `${cafe.cafe_name} - ${cafe.address}`;
         liElement.appendChild(label);
 
+        // Remove button
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Remove';
+        removeBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            removeFavorites(userId, cafe.cafe_id);
+        });
+        liElement.appendChild(removeBtn);
+
         ulFavoriteList.appendChild(liElement);
 
     });
+}
+
+function removeFavorites(userId, cafeId) {
+    fetch(`/favorites/remove/${userId}/${cafeId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.message);
+            fetchAndDisplayUserFavorites(userId);
+        })
+        .catch(error => {
+            console.error('Error removing favorite:', error);
+        });
 }
 
 // Call this function when the user account page loads
@@ -96,8 +125,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     await fetchUserInfo(); // Wait for user info before fetching favorites
     console.log('Domcontentloaded event fired');
 });
-
-
 
 document.addEventListener('DOMContentLoaded', function () {
     const userId = localStorage.getItem('sessionId');
