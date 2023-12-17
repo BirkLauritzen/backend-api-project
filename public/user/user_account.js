@@ -68,38 +68,6 @@ function fetchAndDisplayUserFavorites(userId) {
         });
 }
 
-function displayUserFavorites(favorites) {
-    const ulFavoriteList = document.querySelector('#cafe-list');
-    ulFavoriteList.innerHTML = '';
-
-    favorites.forEach(cafe => {
-        const liElement = document.createElement('li');
-
-        // checkbox
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.value = cafe.cafe_id;
-        liElement.appendChild(checkbox);
-
-        //checkbox label
-        const label = document.createElement("label");
-        label.textContent = `${cafe.cafe_name} - ${cafe.address}`;
-        liElement.appendChild(label);
-
-        // Remove button
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Remove';
-        removeBtn.addEventListener('click', (event) => {
-            event.preventDefault();
-            removeFavorites(userId, cafe.cafe_id);
-        });
-        liElement.appendChild(removeBtn);
-
-        ulFavoriteList.appendChild(liElement);
-
-    });
-}
-
 function removeFavorites(userId, cafeId) {
     fetch(`/favorites/remove/${userId}/${cafeId}`, {
         method: 'DELETE',
@@ -118,6 +86,45 @@ function removeFavorites(userId, cafeId) {
         .catch(error => {
             console.error('Error removing favorite:', error);
         });
+}
+
+function displayUserFavorites(favorites, index) {
+    const ulFavoriteList = document.querySelector('#cafe-list');
+    ulFavoriteList.innerHTML = '';
+
+    favorites.forEach((cafe, i) => {
+        const liElement = document.createElement('li');
+
+        // checkbox
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = cafe.cafe_id;
+        checkbox.id = `checkbox-${index}-${i + 1}`;
+        liElement.appendChild(checkbox);
+
+        //checkbox label
+        const label = document.createElement("label");
+        label.setAttribute('for', checkbox.id);
+        label.textContent = `${cafe.cafe_name} - ${cafe.address}`;
+        liElement.appendChild(label);
+
+        // Remove button
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Remove';
+        removeBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            const userId = localStorage.getItem('sessionId');
+            if (userId) {
+                removeFavorites(userId, cafe.cafe_id);
+            } else {
+                console.error('User ID not found');
+            }
+        });
+        liElement.appendChild(removeBtn);
+
+        ulFavoriteList.appendChild(liElement);
+
+    });
 }
 
 // Call this function when the user account page loads
