@@ -96,7 +96,7 @@ function displayUserFavorites(favorites, index) {
             event.preventDefault();
             const userId = localStorage.getItem('sessionId');
             if (userId) {
-                removeFavorites(userId, cafe.cafe_id);
+                removeSelectedFavorites(userId);
             } else {
                 console.error('User ID not found');
             }
@@ -106,6 +106,20 @@ function displayUserFavorites(favorites, index) {
         ulFavoriteList.appendChild(liElement);
 
     });
+}
+
+function removeSelectedFavorites (userId) {
+    const selectedboxes = document.querySelectorAll('#cafe-list input[type="checkbox"]:checked');
+
+    if (selectedboxes.length === 0) {
+        console.log('No cafes for removal');
+        return;
+    }
+
+    Array.from(selectedboxes).forEach(checkbox => {
+        const cafeId = checkbox.value;
+        removeFavorites(userId,cafeId);
+    })
 }
 
 function removeFavorites(userId, cafeId) {
