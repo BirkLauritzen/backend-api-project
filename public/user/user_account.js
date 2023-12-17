@@ -94,6 +94,7 @@ function displayUserFavorites(favorites, index) {
         // Remove button
         const removeBtn = document.createElement('button');
         removeBtn.textContent = 'Remove';
+        removeBtn.classList.add('remove-btn');
         removeBtn.addEventListener('click', (event) => {
             event.preventDefault();
             const userId = localStorage.getItem('sessionId');
