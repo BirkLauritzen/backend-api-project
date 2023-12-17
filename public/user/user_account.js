@@ -1,5 +1,6 @@
 async function fetchUserInfo() {
     const sessionId = localStorage.getItem('sessionId');
+    console.log('Session id:', sessionId);
 
     if (!sessionId) {
         console.error('No session ID found');
