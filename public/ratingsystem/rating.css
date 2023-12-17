@@ -96,5 +96,76 @@ nav ul li a:hover {
     display: none; /* Initially hide additional cafe boxes */
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100;300;400&display=swap');
 
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background-color: #B08968;
+}
+
+.logo img {
+    max-width: 110px;
+}
+
+/*Log out btn*/
+.account-logout {
+    position: absolute;
+    top: 30px;
+    right: 5px;
+}
+
+#logoutButton {
+    padding: 5px 20px;
+    font-size: 15px;
+}
+
+
+nav ul {
+    list-style-type: none;
+    background-color: #7F5539;
+    overflow: hidden;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    background-color: #ddd;
+    color: #333;
+}
+
+.frontpage {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.frontpage h1,
+.frontpage p,
+.frontpage img {
+    margin: 15px;
+}
+
+.frontpage h1 {
+    font-size: 45px;
+    font-weight: 400;
+}
+
+.frontpage p {
+    font-size: 30px;
+}
 
