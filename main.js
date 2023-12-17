@@ -347,22 +347,41 @@ app.delete('/favorites/remove/:userId/:cafeName', (req, res) => {
     const userId = req.params.userId;
     const cafeName = req.params.cafeName;
 
-    const removeQuery = `
-        DELETE FROM favorites
-        WHERE users_id = ? AND cafe_id = (
-            SELECT cafe_id FROM favorites
-            WHERE users_id = ? AND favorite_cafe_name = ?
-            LIMIT 1
-        )
+    const subquery = `
+        SELECT cafe_id
+        FROM favorites
+        WHERE users_id = ? AND favorite_cafe_name = ?
+        LIMIT 1
     `;
 
-    connection.query(removeQuery, [userId, userId, cafeName], (error, result) => {
+    connection.query(subquery, [userId, cafeName], (error, result) => {
         if (error) {
-            console.error("Error removing from favorites:", error);
+            console.error("Error fetching cafe_id:", error);
             res.status(500).send("Internal server error");
-        } else {
-            res.status(200).json({ message: 'Favorite removed successfully' });
+            return;
         }
+
+        if (result.length === 0) {
+            console.error("Cafe not found for removal");
+            res.status(404).send("Cafe not found for removal");
+            return;
+        }
+
+        const cafeId = result[0].cafe_id;
+
+        const removeQuery = `
+            DELETE FROM favorites
+            WHERE users_id = ? AND cafe_id = ?
+        `;
+
+        connection.query(removeQuery, [userId, cafeId], (error, result) => {
+            if (error) {
+                console.error("Error removing from favorites:", error);
+                res.status(500).send("Internal server error");
+            } else {
+                res.status(200).json({ message: 'Favorite removed successfully' });
+            }
+        });
     });
 });
 
